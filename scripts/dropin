@@ -1,11 +1,14 @@
 #!/bin/bash
 # AppTemplate Drop-in Wrapper Script
 # 
-# Usage: dropin <source> <target> --entities Entity1,Entity2,Entity3 [options]
+# Usage: 
+#   dropin <target> --entities Entity1,Entity2,Entity3 [options]
+#   dropin <source> <target> --entities Entity1,Entity2,Entity3 [options]
 #
 # Examples:
-#   dropin /path/to/apptemplate . --entities Book,Library,Author --project-name bookstore
-#   dropin . ../new-project --entities Product,Category --dry-run
+#   dropin . --entities Book,Library,Author --project-name bookstore
+#   dropin ../new-project --entities Product,Category --dry-run
+#   dropin /path/to/apptemplate . --entities Book,Author
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PYTHON_SCRIPT="$SCRIPT_DIR/dropin.py"

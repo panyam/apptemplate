@@ -5,27 +5,32 @@ This directory contains scripts to help you drop AppTemplate components into exi
 ## Quick Start
 
 ```bash
-# Basic usage - drop AppTemplate into current directory with Book and Author entities
-./scripts/dropin /path/to/apptemplate . --entities Book,Author
+# Basic usage - auto-detect source, drop into current directory
+./scripts/dropin . --entities Book,Author
 
-# Full example with custom project settings
-./scripts/dropin /path/to/apptemplate /path/to/target --entities Book,Library,Author \
+# Drop into different directory (auto-detect source)
+./scripts/dropin ../new-project --entities Book,Library,Author \
   --project-name bookstore \
   --module-path github.com/mycompany/bookstore
 
+# Explicit source and target
+./scripts/dropin /path/to/apptemplate /path/to/target --entities Book,Author
+
 # Dry run to see what would happen without making changes
-./scripts/dropin /path/to/apptemplate . --entities Product,Category --dry-run
+./scripts/dropin . --entities Product,Category --dry-run
 ```
 
 ## What It Does
 
 The `dropin` script:
 
-1. **Copies Infrastructure**: Copies core AppTemplate files (utils, auth, web server, frontend build configs)
-2. **Generates Entities**: Creates protobuf, Go services, web handlers, and templates for each entity
-3. **Updates Configuration**: Modifies go.mod, package.json, and other config files
-4. **Excludes AppItem**: Removes original AppItem files to avoid conflicts
-5. **Runs Code Generation**: Executes `buf generate` and frontend builds
+1. **Auto-Detects Source**: Automatically finds AppTemplate directory from script location
+2. **Copies Infrastructure**: Copies core AppTemplate files (utils, auth, web server, frontend build configs)
+3. **Excludes Generated Code**: Skips `gen/`, `logs/`, `dist/`, and `node_modules/` directories
+4. **Generates Entities**: Creates protobuf, Go services, web handlers, and templates for each entity
+5. **Updates Configuration**: Modifies go.mod, package.json, and other config files
+6. **Excludes AppItem**: Removes original AppItem files to avoid conflicts
+7. **Runs Code Generation**: Executes `buf generate` and frontend builds
 
 ## Command Line Options
 
@@ -121,20 +126,20 @@ Special pluralization handling:
 
 ### E-commerce Store
 ```bash
-./scripts/dropin . ../ecommerce --entities Product,Category,Order \
+./scripts/dropin ../ecommerce --entities Product,Category,Order \
   --project-name ecommerce \
   --module-path github.com/mycompany/ecommerce
 ```
 
 ### Library Management
 ```bash 
-./scripts/dropin . . --entities Book,Library,Author,Member \
+./scripts/dropin . --entities Book,Library,Author,Member \
   --project-name library-system
 ```
 
 ### Blog Platform
 ```bash
-./scripts/dropin /path/to/apptemplate ../blog --entities Post,Category,User \
+./scripts/dropin ../blog --entities Post,Category,User \
   --project-name blog \
   --module-path github.com/myblog/api
 ```

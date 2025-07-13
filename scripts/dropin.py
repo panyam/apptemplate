@@ -27,7 +27,7 @@ class AppTemplateDropin:
         self.source_dir = Path(source_dir).resolve()
         self.target_dir = Path(target_dir).resolve()
         self.entities = entities
-        self.project_name = options.get('project_name', self.target_dir.name)
+        self.project_name = options.get('project_name') or self.target_dir.name
         self.module_path = options.get('module_path') or f'github.com/{os.getenv("USER", "user")}/{self.project_name}'
         self.exclude_appitem = options.get('exclude_appitem', True)
         self.dry_run = options.get('dry_run', False)
@@ -95,6 +95,26 @@ class AppTemplateDropin:
             'README.md',
             '.devloop.yaml',
         }
+        
+        # Directories to exclude when copying
+        self.exclude_patterns = {
+            'gen/',
+            'gen',
+            'web/gen/',
+            'web/gen',
+            'web/frontend/gen/',
+            'web/frontend/gen',
+            'web/static/js/gen/',
+            'web/static/js/gen',
+            'web/templates/gen/',
+            'web/templates/gen',
+            'logs/',
+            'logs',
+            'dist/',
+            'dist',
+            'node_modules/',
+            'node_modules',
+        }
 
     def run(self):
         """Main execution method"""
@@ -148,7 +168,7 @@ class AppTemplateDropin:
             print(f"💾 Created backup at {backup_dir}")
 
     def copy_infrastructure(self):
-        """Copy infrastructure files that don't need entity transformation"""
+        """Copy infrastructure files and transform project references"""
         print("📋 Copying infrastructure files...")
         
         for file_pattern in self.infrastructure_files:
@@ -166,12 +186,99 @@ class AppTemplateDropin:
             if source_path.is_dir():
                 if target_path.exists():
                     shutil.rmtree(target_path)
-                shutil.copytree(source_path, target_path)
+                # Copy directory and then transform files within it
+                shutil.copytree(source_path, target_path, ignore=self.ignore_patterns)
+                self.transform_directory(target_path)
             else:
                 target_path.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(source_path, target_path)
+                # Copy and transform individual file
+                if self.should_transform_file(source_path):
+                    content = source_path.read_text(encoding='utf-8', errors='ignore')
+                    content = self.transform_project_content(content)
+                    target_path.write_text(content, encoding='utf-8')
+                else:
+                    shutil.copy2(source_path, target_path)
                 
             print(f"📄 Copied: {file_pattern}")
+
+    def transform_directory(self, directory_path: Path):
+        """Transform all transformable files in a directory recursively"""
+        for file_path in directory_path.rglob('*'):
+            if file_path.is_file() and self.should_transform_file(file_path):
+                try:
+                    content = file_path.read_text(encoding='utf-8', errors='ignore')
+                    content = self.transform_project_content(content)
+                    file_path.write_text(content, encoding='utf-8')
+                except Exception as e:
+                    print(f"⚠️  Failed to transform {file_path}: {e}")
+
+    def should_transform_file(self, file_path: Path) -> bool:
+        """Determine if a file should be transformed (text files only)"""
+        # Transform text-based files
+        text_extensions = {'.go', '.js', '.ts', '.json', '.html', '.css', '.md', '.yaml', '.yml', '.proto', '.txt'}
+        return file_path.suffix.lower() in text_extensions or file_path.name in {'Makefile', '.devloop.yaml'}
+
+    def transform_project_content(self, content: str) -> str:
+        """Transform content by replacing project-wide references"""
+        # 1. Module path transformations
+        content = self.transform_import_paths(content)
+        
+        # 2. Project name transformations
+        project_lower = self.project_name.lower()
+        project_upper = self.project_name.upper()
+        
+        transformations = {
+            # Environment variables
+            'APPTEMPLATE_': f'{project_upper}_',
+            
+            # Binary/executable names
+            '/tmp/apptemplate': f'/tmp/{project_lower}',
+            
+            # Proto package names and imports
+            'package apptemplate.v1': f'package {project_lower}.v1',
+            'import "apptemplate/v1/': f'import "{project_lower}/v1/',
+            '/gen/go/apptemplate/': f'/gen/go/{project_lower}/',
+            
+            # Proto content references
+            'apptemplate_content': f'{project_lower}_content',
+            
+            # App identifiers
+            'APP_ID = "apptemplate"': f'APP_ID = "{project_lower}"',
+            
+            # OneAuth app names
+            'oa.New("AppTemplate")': f'oa.New("{self.project_name}")',
+            
+            # HTML titles and content
+            'Welcome to AppTemplate': f'Welcome to {self.project_name}',
+            'AppTemplate - ': f'{self.project_name} - ',
+            
+            # Package.json fields
+            '"apptemplate"': f'"{project_lower}"',
+            'panyam/apptemplate': f'panyam/{project_lower}',  # GitHub URLs
+            
+            # Webpack library names
+            'library: ["apptemplate"': f'library: ["{project_lower}"',
+            
+            # README content
+            'AppTemplate ->': f'{self.project_name} ->',
+            'apptemplate ->': f'{project_lower} ->',
+        }
+        
+        for old, new in transformations.items():
+            content = content.replace(old, new)
+            
+        return content
+
+    def ignore_patterns(self, dir_path, names):
+        """Ignore function for shutil.copytree to exclude gen/ and other patterns"""
+        ignored = []
+        for name in names:
+            # Check if this directory/file should be excluded
+            if name in {'gen', 'logs', 'dist', 'node_modules'}:
+                ignored.append(name)
+            elif name.endswith('.log'):
+                ignored.append(name)
+        return ignored
 
     def generate_entities(self):
         """Generate files for each entity"""
@@ -193,7 +300,7 @@ class AppTemplateDropin:
         if not source_models.exists():
             return
             
-        target_models = self.target_dir / f'protos/{self.project_name}/v1/models.proto'
+        target_models = self.target_dir / f'protos/{self.project_name.lower()}/v1/models.proto'
         
         if self.dry_run:
             print(f"🧪 Would copy: models.proto")
@@ -202,11 +309,69 @@ class AppTemplateDropin:
         target_models.parent.mkdir(parents=True, exist_ok=True)
         
         content = source_models.read_text()
-        content = content.replace('apptemplate', self.project_name)
-        content = self.transform_import_paths(content)
+        content = self.transform_project_content(content)
+        
+        # Replace AppItem with entity definitions if not excluding appitem
+        if not self.exclude_appitem:
+            # Keep the AppItem as-is
+            pass
+        else:
+            # Remove AppItem and add entity definitions
+            content = self.remove_appitem_and_add_entities(content)
         
         target_models.write_text(content)
         print(f"📄 Generated: models.proto")
+
+    def remove_appitem_and_add_entities(self, content: str) -> str:
+        """Remove AppItem definition and add entity definitions"""
+        # Remove the AppItem message definition
+        lines = content.split('\n')
+        filtered_lines = []
+        in_appitem_message = False
+        
+        for line in lines:
+            if line.startswith('message AppItem {'):
+                in_appitem_message = True
+                continue
+            elif in_appitem_message and line == '}':
+                in_appitem_message = False
+                continue
+            elif in_appitem_message:
+                continue
+            else:
+                filtered_lines.append(line)
+        
+        # Add entity definitions
+        entity_definitions = []
+        for entity in self.entities:
+            entity_def = f"""
+message {entity} {{
+  google.protobuf.Timestamp created_at = 1;
+  google.protobuf.Timestamp updated_at = 2;
+
+  // Unique ID for the {entity.lower()}
+  string id = 3;
+
+  // Name if items have names
+  string name = 4;
+
+  // Description if {entity.lower()} has a description
+  string description = 5;
+
+  // Some tags
+  repeated string tags = 6;
+
+  // A possible image url
+  string image_url = 7;
+
+  // Difficulty - example attribute
+  string difficulty = 8;
+}}"""
+            entity_definitions.append(entity_def)
+        
+        # Join the content and add entity definitions
+        result = '\n'.join(filtered_lines) + '\n' + '\n'.join(entity_definitions) + '\n'
+        return result
 
     def generate_proto_files(self, entity: str):
         """Generate protobuf files for entity"""
@@ -216,7 +381,7 @@ class AppTemplateDropin:
             return
             
         entity_plural = self.pluralize(entity.lower())
-        target_proto = self.target_dir / f'protos/{self.project_name}/v1/{entity_plural}.proto'
+        target_proto = self.target_dir / f'protos/{self.project_name.lower()}/v1/{entity_plural}.proto'
         
         if self.dry_run:
             print(f"🧪 Would generate: {target_proto}")
@@ -227,7 +392,7 @@ class AppTemplateDropin:
         # Read and transform proto content
         content = source_proto.read_text()
         content = self.transform_entity_content(content, entity)
-        content = content.replace('apptemplate', self.project_name)
+        content = self.transform_project_content(content)
         
         target_proto.write_text(content)
         print(f"📄 Generated: {target_proto}")
@@ -251,7 +416,7 @@ class AppTemplateDropin:
         # Read and transform service content
         content = source_service.read_text()
         content = self.transform_entity_content(content, entity)
-        content = self.transform_import_paths(content)
+        content = self.transform_project_content(content)
         
         target_service.write_text(content)
         print(f"📄 Generated: {target_service}")
@@ -282,7 +447,7 @@ class AppTemplateDropin:
             
             content = source_path.read_text()
             content = self.transform_entity_content(content, entity)
-            content = self.transform_import_paths(content)
+            content = self.transform_project_content(content)
             
             target_path.write_text(content)
             print(f"📄 Generated: {target_file}")
@@ -303,6 +468,7 @@ class AppTemplateDropin:
         
         content = source_ts.read_text()
         content = self.transform_entity_content(content, entity)
+        content = self.transform_project_content(content)
         
         target_ts.write_text(content)
         print(f"📄 Generated: {target_ts}")
@@ -320,8 +486,19 @@ class AppTemplateDropin:
             'AppItems': entity_plural_title,
         }
         
+        # Apply basic transformations first
         for old, new in transformations.items():
             content = content.replace(old, new)
+        
+        # Fix service name pluralization issues (e.g., LibrarysService -> LibrariesService)
+        # This handles cases where the basic pluralization doesn't work correctly
+        if entity_lower == 'library':
+            content = content.replace('LibrarysService', 'LibrariesService')
+            content = content.replace('librarysService', 'librariesService')
+            content = content.replace('ListLibrarys', 'ListLibraries')
+            content = content.replace('GetLibrarys', 'GetLibraries')
+            content = content.replace('librarys:', 'libraries:')
+            content = content.replace('/librarys', '/libraries')
             
         return content
 
@@ -439,10 +616,42 @@ class AppTemplateDropin:
             print("⚠️  Failed to build frontend")
 
 
+def auto_detect_source():
+    """Auto-detect AppTemplate source directory from script location"""
+    script_dir = Path(__file__).parent.resolve()
+    # Script is in scripts/ subdirectory, so parent is AppTemplate root
+    apptemplate_dir = script_dir.parent
+    
+    # Verify this looks like an AppTemplate directory
+    if (apptemplate_dir / 'protos').exists() and (apptemplate_dir / 'web').exists():
+        return str(apptemplate_dir)
+    
+    # Maybe script is copied elsewhere, try current directory
+    current_dir = Path.cwd()
+    if (current_dir / 'protos').exists() and (current_dir / 'web').exists():
+        return str(current_dir)
+        
+    return None
+
 def main():
-    parser = argparse.ArgumentParser(description='AppTemplate Drop-in Script')
-    parser.add_argument('source', help='Source AppTemplate directory')
-    parser.add_argument('target', help='Target project directory')
+    parser = argparse.ArgumentParser(
+        description='AppTemplate Drop-in Script',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Auto-detect source, drop into current directory
+  dropin . --entities Book,Author
+  
+  # Specify source and target
+  dropin /path/to/apptemplate /path/to/target --entities Book,Author
+  
+  # Full configuration
+  dropin . ../new-project --entities Product,Category \\
+    --project-name ecommerce --module-path github.com/company/ecommerce
+        """
+    )
+    
+    parser.add_argument('args', nargs='+', help='[source] target - Target directory (source auto-detected if not provided)')
     parser.add_argument('--entities', required=True, help='Comma-separated list of entities')
     parser.add_argument('--project-name', help='Project name (default: target directory name)')
     parser.add_argument('--module-path', help='Go module path')
@@ -451,11 +660,28 @@ def main():
     
     args = parser.parse_args()
     
+    # Handle positional arguments
+    if len(args.args) == 1:
+        # Only target provided - auto-detect source
+        target = args.args[0]
+        source = auto_detect_source()
+        if not source:
+            print("❌ Error: Could not auto-detect AppTemplate source directory.")
+            print("   Please provide source directory explicitly:")
+            print("   dropin /path/to/apptemplate /path/to/target --entities ...")
+            sys.exit(1)
+    elif len(args.args) == 2:
+        # Both source and target provided
+        source = args.args[0]
+        target = args.args[1]
+    else:
+        parser.error("Provide either target directory (source auto-detected) or both source and target directories")
+    
     entities = [e.strip() for e in args.entities.split(',')]
     
     dropin = AppTemplateDropin(
-        source_dir=args.source,
-        target_dir=args.target,
+        source_dir=source,
+        target_dir=target,
         entities=entities,
         project_name=args.project_name,
         module_path=args.module_path,
