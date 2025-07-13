@@ -1,0 +1,63 @@
+// protos/apptemplate/v1/models.proto
+
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+option go_package = "github.com/panyam/apptemplate/gen/go/apptemplate/v1";
+package apptemplate.v1;
+
+message Pagination {
+  /**
+   * Instead of an offset an abstract  "page" key is provided that offers
+   * an opaque "pointer" into some offset in a result set.
+   */
+  string page_key = 1;
+
+  /**
+   * If a pagekey is not supported we can also support a direct integer offset
+   * for cases where it makes sense.
+   */
+  int32 page_offset = 2;
+
+  /**
+   * Number of results to return.
+   */
+  int32 page_size = 3;
+}
+
+message PaginationResponse {
+  /**
+   * The key/pointer string that subsequent List requests should pass to
+   * continue the pagination.
+   */
+  string next_page_key = 2;
+
+  /**
+   * Also support an integer offset if possible
+   */
+  int32 next_page_offset = 3;
+
+  /**
+   * Whether theere are more results.
+   */
+  bool has_more = 4;
+
+  /**
+   * Total number of results.
+   */
+  int32 total_results = 5;
+}
+
+message AppItem {
+  google.protobuf.Timestamp created_at = 1;
+  google.protobuf.Timestamp updated_at = 2;
+
+  // Unique ID for the appitem
+  string id = 3;
+
+  // Name if items have names
+  string name = 4;
+
+  // Description if appitem has a description
+  string description = 5;
+}
+

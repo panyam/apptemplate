@@ -1,0 +1,468 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "apptemplate/v1/models.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "AppItemsService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/appitems": {
+      "get": {
+        "summary": "ListAppItems returns all available appitems",
+        "operationId": "AppItemsService_ListAppItems",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListAppItemsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "AppItemsService"
+        ]
+      },
+      "post": {
+        "summary": "*\nCreate a new appitem",
+        "operationId": "AppItemsService_CreateAppItem",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateAppItemResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateAppItemRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AppItemsService"
+        ]
+      }
+    },
+    "/v1/appitems/{appitem.id}": {
+      "patch": {
+        "summary": "GetAppItem returns a specific appitem with metadata",
+        "operationId": "AppItemsService_UpdateAppItem",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateAppItemResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "appitem.id",
+            "description": "Unique ID for the appitem",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "[^/]+"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "appitem": {
+                  "type": "object",
+                  "properties": {
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "name": {
+                      "type": "string",
+                      "title": "Name if items have names"
+                    },
+                    "description": {
+                      "type": "string",
+                      "title": "Description if appitem has a description"
+                    }
+                  },
+                  "title": "*\nAppItem being updated"
+                },
+                "updateMask": {
+                  "type": "string",
+                  "description": "*\nMask of fields being updated in this AppItem to make partial changes."
+                }
+              },
+              "title": "UpdateAppItemRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AppItemsService"
+        ]
+      }
+    },
+    "/v1/appitems/{id}": {
+      "get": {
+        "summary": "GetAppItem returns a specific appitem with metadata",
+        "operationId": "AppItemsService_GetAppItem",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetAppItemResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "description": "Optional, defaults to default_version",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AppItemsService"
+        ]
+      },
+      "delete": {
+        "summary": "*\nDelete a particular appitem",
+        "operationId": "AppItemsService_DeleteAppItem",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteAppItemResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "*\nID of the appitem to be deleted.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "[^/]+"
+          }
+        ],
+        "tags": [
+          "AppItemsService"
+        ]
+      }
+    },
+    "/v1/appitems:batchGet": {
+      "get": {
+        "summary": "*\nBatch get multiple appitems by ID",
+        "operationId": "AppItemsService_GetAppItems",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetAppItemsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ids",
+            "description": "*\nIDs of the appitem to be fetched",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "AppItemsService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1AppItem": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string",
+          "title": "Unique ID for the appitem"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name if items have names"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description if appitem has a description"
+        }
+      }
+    },
+    "v1AppItemInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "difficulty": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "icon": {
+          "type": "string"
+        },
+        "lastUpdated": {
+          "type": "string"
+        }
+      },
+      "title": "AppItemInfo represents a appitem in the catalog"
+    },
+    "v1AppItemProject": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "difficulty": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "icon": {
+          "type": "string"
+        },
+        "versions": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1AppItemVersion"
+          }
+        },
+        "defaultVersion": {
+          "type": "string"
+        },
+        "lastUpdated": {
+          "type": "string"
+        }
+      },
+      "title": "AppItemProject represents a full appitem project"
+    },
+    "v1AppItemVersion": {
+      "type": "object",
+      "properties": {
+        "apptemplate": {
+          "type": "string"
+        },
+        "recipe": {
+          "type": "string"
+        },
+        "readme": {
+          "type": "string"
+        }
+      },
+      "title": "AppItemVersion represents a version of a appitem"
+    },
+    "v1CreateAppItemRequest": {
+      "type": "object",
+      "properties": {
+        "appitem": {
+          "$ref": "#/definitions/v1AppItem",
+          "title": "*\nAppItem being updated"
+        }
+      },
+      "title": "*\nAppItem creation request object"
+    },
+    "v1CreateAppItemResponse": {
+      "type": "object",
+      "properties": {
+        "appitem": {
+          "$ref": "#/definitions/v1AppItem",
+          "title": "*\nAppItem being created"
+        },
+        "fieldErrors": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "*\nError specific to a field if there are any errors."
+        }
+      },
+      "description": "*\nResponse of an appitem creation."
+    },
+    "v1DeleteAppItemResponse": {
+      "type": "object",
+      "title": "*\nAppItem deletion response"
+    },
+    "v1GetAppItemResponse": {
+      "type": "object",
+      "properties": {
+        "appitem": {
+          "$ref": "#/definitions/v1AppItemProject"
+        }
+      }
+    },
+    "v1GetAppItemsResponse": {
+      "type": "object",
+      "properties": {
+        "appitems": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1AppItem"
+          }
+        }
+      },
+      "title": "*\nAppItem batch-get response"
+    },
+    "v1ListAppItemsResponse": {
+      "type": "object",
+      "properties": {
+        "appitems": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1AppItemInfo"
+          }
+        }
+      }
+    },
+    "v1UpdateAppItemResponse": {
+      "type": "object",
+      "properties": {
+        "appitem": {
+          "$ref": "#/definitions/v1AppItem",
+          "title": "*\nAppItem being updated"
+        }
+      },
+      "description": "*\nThe request for (partially) updating an AppItem.",
+      "title": "UpdateAppItemResponse"
+    }
+  }
+}

@@ -1,0 +1,216 @@
+syntax = "proto3";
+
+package apptemplate.v1;
+
+import "google/protobuf/field_mask.proto";
+import "apptemplate/v1/models.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "github.com/panyam/apptemplate/gen/go/apptemplate/v1";
+
+// AppItemsService manages the appitem examples catalog
+service AppItemsService {
+  /**
+   * Create a new appitem
+   */
+  rpc CreateAppItem(CreateAppItemRequest) returns (CreateAppItemResponse) {
+    option (google.api.http) = {
+      post: "/v1/appitems",
+      body: "*",
+    };
+  }
+
+  /**
+   * Batch get multiple appitems by ID
+   */
+  rpc GetAppItems(GetAppItemsRequest) returns (GetAppItemsResponse) { 
+    option (google.api.http) = {
+      get: "/v1/appitems:batchGet"
+    };
+  }
+
+  // ListAppItems returns all available appitems
+  rpc ListAppItems(ListAppItemsRequest) returns (ListAppItemsResponse) {
+    option (google.api.http) = {
+      get: "/v1/appitems"
+    };
+  }
+
+  // GetAppItem returns a specific appitem with metadata
+  rpc GetAppItem(GetAppItemRequest) returns (GetAppItemResponse) {
+    option (google.api.http) = {
+      get: "/v1/appitems/{id}"
+    };
+  }
+
+  /**
+   * Delete a particular appitem
+   */
+  rpc DeleteAppItem(DeleteAppItemRequest) returns (DeleteAppItemResponse) { 
+    option (google.api.http) = {
+      delete: "/v1/appitems/{id=*}"
+    };
+  }
+
+
+  // GetAppItem returns a specific appitem with metadata
+  rpc UpdateAppItem(UpdateAppItemRequest) returns (UpdateAppItemResponse) {
+    option (google.api.http) = {
+      patch: "/v1/appitems/{appitem.id=*}"
+      body: "*"
+    };
+  }
+}
+
+// AppItemInfo represents a appitem in the catalog
+message AppItemInfo {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string category = 4;
+  string difficulty = 5;
+  repeated string tags = 6;
+  string icon = 7;
+  string last_updated = 8;
+}
+
+// AppItemProject represents a full appitem project
+message AppItemProject {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string category = 4;
+  string difficulty = 5;
+  repeated string tags = 6;
+  string icon = 7;
+  map<string, AppItemVersion> versions = 8;
+  string default_version = 9;
+  string last_updated = 10;
+}
+
+// AppItemVersion represents a version of a appitem
+message AppItemVersion {
+  string apptemplate = 1;
+  string recipe = 2;
+  string readme = 3;
+}
+
+// Request messages
+message ListAppItemsRequest {}
+
+message ListAppItemsResponse {
+  repeated AppItemInfo appitems = 1;
+}
+
+message GetAppItemRequest {
+  string id = 1;
+  string version = 2; // Optional, defaults to default_version
+}
+
+message GetAppItemResponse {
+  AppItemProject appitem = 1;
+}
+
+message GetAppItemContentRequest {
+  string id = 1;
+  string version = 2; // Optional, defaults to default_version
+}
+
+message GetAppItemContentResponse {
+  string apptemplate_content = 1;
+  string recipe_content = 2;
+  string readme_content = 3;
+}
+
+message UpdateAppItemRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "UpdateAppItemRequest"
+    }
+  };
+
+  /**
+   * AppItem being updated
+   */
+  AppItem appitem = 1;
+
+  /**
+   * Mask of fields being updated in this AppItem to make partial changes.
+   */
+  google.protobuf.FieldMask update_mask = 2;
+}
+
+/**
+ * The request for (partially) updating an AppItem.
+ */
+message UpdateAppItemResponse {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "UpdateAppItemResponse"
+    }
+  };
+
+  /**
+   * AppItem being updated
+   */
+  AppItem appitem = 1;
+}
+
+/**
+ * Request to delete an appitem.
+ */
+message DeleteAppItemRequest {
+  /**
+   * ID of the appitem to be deleted.
+   */
+  string id = 1;
+}
+
+/**
+ * AppItem deletion response
+ */
+message DeleteAppItemResponse {
+}
+
+/**
+ * Request to batch get appitems
+ */
+message GetAppItemsRequest {
+  /**
+   * IDs of the appitem to be fetched
+   */
+  repeated string ids = 1;
+}
+
+/**
+ * AppItem batch-get response
+ */
+message GetAppItemsResponse {
+  map<string, AppItem> appitems = 1;
+}
+
+/**
+ * AppItem creation request object
+ */
+message CreateAppItemRequest {
+  /**
+   * AppItem being updated
+   */
+  AppItem appitem = 1;
+}
+
+/**
+ * Response of an appitem creation.
+ */
+message CreateAppItemResponse {
+  /**
+   * AppItem being created
+   */
+  AppItem appitem = 1;
+
+  /**
+   * Error specific to a field if there are any errors.
+   */
+  map<string, string> field_errors = 2;
+}
