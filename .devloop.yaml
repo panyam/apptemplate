@@ -6,16 +6,15 @@ settings:
 
 rules:
   # Go Backend Development & Testing
-  - name: "go-backend"
+  - name: "backend"
     color: "blue"
     watch:
       - action: "exclude"
         patterns:
-          - "assets/**/*"
           - "web/**"
-          - "wasm/**"
       - action: "include"
         patterns:
+          - "web/**/*.go"
           - "**/*.go"
           - "go.mod"
           - "go.sum"
@@ -34,21 +33,21 @@ rules:
     watch:
       - action: "exclude"
         patterns:
-          - "web/node_modules/**"
-          - "web/dist/**"
-          - "web/test-results/**"
-          - "web/playwright-report/**"
+          - "node_modules/**"
+          - "dist/**"
+          - "test-results/**"
+          - "playwright-report/**"
       - action: "include"
         patterns:
-          - "web/**/*.ts"
-          - "web/**/*.js"
-          - "web/**/*.css"
-          - "web/**/*.html"
-          - "web/**/*.spec.ts"
-          - "web/**/*.test.ts"
-          - "web/package.json"
-          - "web/vite.config.ts"
-          - "web/tsconfig.json"
+          - "**/*.ts"
+          - "**/*.js"
+          - "**/*.css"
+          - "**/*.html"
+          - "**/*.spec.ts"
+          - "**/*.test.ts"
+          - "package.json"
+          - "vite.config.ts"
+          - "tsconfig.json"
     commands:
       - "echo '⚡ Building frontend...'"
       - "npm run build:only"

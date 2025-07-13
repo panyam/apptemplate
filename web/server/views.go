@@ -18,6 +18,11 @@ import (
 
 const TEMPLATES_FOLDER = "./web/templates"
 
+// You may have a builder/bundler creating an output folder.  Set that path here.  It can be absolute or relative to
+// where the executable will be running from
+const DIST_FOLDER = "./web/dist"
+const STATIC_FOLDER = "./web/static"
+
 type ViewContext struct {
 	AuthMiddleware *oa.Middleware
 	ClientMgr      *svc.ClientMgr
@@ -71,6 +76,17 @@ func NewRootViewsHandler(middleware *oa.Middleware, clients *svc.ClientMgr) *Roo
 			lines := (strings.Split(strings.TrimSpace(code), "\n"))
 			return strings.Join(lines, "<br/>")
 		},
+		"dset": func(d map[string]any, key string, value any) map[string]any {
+			d[key] = value
+			return d
+		},
+		"lset": func(a []any, index int, value any) []any {
+			a[index] = value
+			return a
+		},
+		"safeHTMLAttr": func(s string) template.HTMLAttr {
+			return template.HTMLAttr(s)
+		},
 	})
 	out.Context = &ViewContext{
 		AuthMiddleware: middleware,
@@ -85,6 +101,7 @@ func NewRootViewsHandler(middleware *oa.Middleware, clients *svc.ClientMgr) *Roo
 
 func (b *RootViewsHandler) ViewRenderer(view ViewMaker, template string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("DEBUG: ViewRenderer called for path %s", r.URL.Path)
 		b.RenderView(view(), template, r, w)
 	}
 }
@@ -95,18 +112,28 @@ func (b *RootViewsHandler) RenderView(view View, template string, r *http.Reques
 		e := t.Elem()
 		template = e.Name()
 	}
+	log.Printf("DEBUG: Rendering template '%s' for view type %T", template, view)
 	err, finished := view.Load(r, w, b.Context)
 	if !finished {
 		if err != nil {
 			log.Println("Error: ", err)
 			fmt.Fprint(w, "Error rendering: ", err.Error())
 		} else {
-			tmpl, err := b.Context.Templates.Loader.Load(template, "")
+			templateFile := template + ".html"
+			log.Printf("DEBUG: Loading template file '%s'", templateFile)
+			tmpl, err := b.Context.Templates.Loader.Load(templateFile, "")
 			if err != nil {
-				log.Println("Template Load Error: ", template, err)
+				log.Println("Template Load Error: ", templateFile, err)
 				fmt.Fprint(w, "Error rendering: ", err.Error())
 			} else {
-				b.Context.Templates.RenderHtmlTemplate(w, tmpl[0], template, view, nil)
+				log.Printf("DEBUG: Successfully loaded template, rendering...")
+				err = b.Context.Templates.RenderHtmlTemplate(w, tmpl[0], template, view, nil)
+				if err != nil {
+					log.Printf("DEBUG: Template render error: %v", err)
+					fmt.Fprint(w, "Template render error: ", err.Error())
+				} else {
+					log.Printf("DEBUG: Template rendered successfully")
+				}
 			}
 		}
 	}
@@ -119,11 +146,15 @@ func (b *RootViewsHandler) HandleError(err error, w io.Writer) {
 }
 
 func (n *RootViewsHandler) Handler() http.Handler {
-	return n.mux
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("DEBUG: RootViewsHandler received request: %s %s", r.Method, r.URL.Path)
+		n.mux.ServeHTTP(w, r)
+	})
 }
 
 // Here you can setup all your view routes, pages, etc
 func (n *RootViewsHandler) setupRoutes() {
+	log.Println("DEBUG: Setting up routes...")
 	// This is the chance to setup all your routes for your app across various resources etc
 	// Typically "/views" is dedicated for returning view fragments - eg via htmx
 	n.mux.Handle("/views/", http.StripPrefix("/views", n.setupViewsMux()))
@@ -131,12 +162,15 @@ func (n *RootViewsHandler) setupRoutes() {
 	// Then seutp your "resource" specific endpoints
 	n.mux.Handle("/appitems/", http.StripPrefix("/appitems", n.setupAppItemsMux()))
 
+	n.mux.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir(STATIC_FOLDER))))
+
 	n.mux.HandleFunc("/about", n.ViewRenderer(Copier(&GenericPage{}), "AboutPage"))
 	n.mux.HandleFunc("/contact", n.ViewRenderer(Copier(&GenericPage{}), "ContactUsPage"))
 	n.mux.HandleFunc("/login", n.ViewRenderer(Copier(&LoginPage{}), ""))
 	// n.mux.HandleFunc("/logout", n.onLogout)
 	n.mux.HandleFunc("/privacy-policy", n.ViewRenderer(Copier(&PrivacyPolicy{}), ""))
 	n.mux.HandleFunc("/terms-of-service", n.ViewRenderer(Copier(&TermsOfService{}), ""))
+	log.Println("DEBUG: Registering root path handler")
 	n.mux.HandleFunc("/", n.ViewRenderer(Copier(&HomePage{}), ""))
 	n.mux.Handle("/{invalidbits}/", http.NotFoundHandler()) // <-- Default 404
 

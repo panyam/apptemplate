@@ -4,7 +4,15 @@ import (
 	"net/http"
 )
 
+type BasePage struct {
+	Title              string
+	BodyClass          string
+	CustomHeader       bool
+	BodyDataAttributes string
+}
+
 type HomePage struct {
+	BasePage
 	Header Header
 
 	// Add any other components here to reflect what you want to show in your home page
@@ -12,6 +20,7 @@ type HomePage struct {
 }
 
 func (p *HomePage) Load(r *http.Request, w http.ResponseWriter, vc *ViewContext) (err error, finished bool) {
+	p.Title = "Home"
 	p.Header.Load(r, w, vc)
 	return
 }

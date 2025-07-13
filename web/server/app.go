@@ -12,10 +12,6 @@ import (
 	"github.com/panyam/templar"
 )
 
-// You may have a builder/bundler creating an output folder.  Set that path here.  It can be absolute or relative to
-// where the executable will be running from
-const DIST_FOLDER = "./web/dist"
-
 // You can all this anything - but App is just a convention for all "top level" routes and handlers
 type App struct {
 	Api       *ApiHandler
@@ -83,9 +79,16 @@ func (a *App) Handler() http.Handler {
 	// Serve examples directory for WASM demos
 	r.Handle("/examples/", http.StripPrefix("/examples", http.FileServer(http.Dir("./examples/"))))
 
-	r.Handle("/", a.ViewsRoot.Handler())
+	r.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("DEBUG: App handler received request: %s %s", r.Method, r.URL.Path)
+		a.ViewsRoot.Handler().ServeHTTP(w, r)
+	}))
 
-	return r
+	sessionHandler := a.Session.LoadAndSave(r)
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("DEBUG: Session middleware handling request: %s %s", r.Method, r.URL.Path)
+		sessionHandler.ServeHTTP(w, r)
+	})
 }
 
 // SetupTemplates initializes the Templar template group

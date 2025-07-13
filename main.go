@@ -82,5 +82,6 @@ func (b *Backend) SetupApp() *utils.App {
 	log.Println("gateway, Address: ", gatewayAddress)
 	app.AddServer(&services.Server{Address: b.GrpcAddress})
 	app.AddServer(&web.WebAppServer{GrpcAddress: b.GrpcAddress, Address: b.GatewayAddress})
+	b.App = app
 	return app
 }
