@@ -1,4 +1,4 @@
-# ./web/views/templates/ Summary
+# ./web/templates/ Summary
 
 **Purpose:**
 
@@ -21,6 +21,6 @@ This folder contains all the Go HTML template files (`*.html`) used for server-s
 **Key Concepts/Responsibilities:**
 
 *   **HTML Structure:** Defines the semantic HTML for all pages and components.
-*   **SSR Rendering:** Provides the templates processed by the Go backend (`web/views/`) to generate the initial HTML sent to the browser.
+*   **SSR Rendering:** Provides the templates processed by the Go backend (`web/frontend`) to generate the initial HTML sent to the browser.
 *   **Client-Side Templates:** Acts as a registry for HTML fragments used by TypeScript components to dynamically update the UI without full page reloads.
 *   **Styling:** Relies heavily on Tailwind CSS utility classes defined within the HTML.

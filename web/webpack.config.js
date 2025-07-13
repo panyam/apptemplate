@@ -7,15 +7,15 @@ const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const SRC_FOLDERS = ["./views/components"];
-const OUTPUT_FOLDERS = ["./views/templates"]; // Where gen.*.html files go
+const SRC_FOLDERS = ["./frontend/components"];
+const OUTPUT_FOLDERS = ["./templates"]; // Where gen.*.html files go
 const OUTPUT_DIR = path.resolve(__dirname, "./static/js/gen/");
 
 const components = [
   ["HomePage", 0, "ts"],
   ["LoginPage", 0, "ts"],
-  ["AppItemListingPage", 0, "ts"],
-  ["AppItemDetailPage", 0, "ts"],
+  // ["AppItemListingPage", 0, "ts"],
+  ["AppItemDetailsPage", 0, "ts"],
 ];
 
 module.exports = (_env, options) => {

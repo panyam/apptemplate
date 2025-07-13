@@ -23,9 +23,10 @@ type App struct {
 	Session   *scs.SessionManager // Session and auth go together
 	ClientMgr *svc.ClientMgr
 
-	// each reosurce can have its own dedicate page handler
-	// we could have a dedicatd "views" handler and have them register it all or do it here
-	// doing it here is one less level of indirection
+	// Instead of giving each resource its own dedicated handler we are having a top level "Views"
+	// handler.  This is responsible for handling all views/pages/static resources.  In the Views
+	// you'd setup the various routes for your project.  The idea is with Views router we can start
+	// bundling common "View COntext" related items from a single place
 	ViewsRoot *RootViewsHandler
 
 	mux     *http.ServeMux
