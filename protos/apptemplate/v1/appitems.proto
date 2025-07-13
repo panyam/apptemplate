@@ -75,32 +75,19 @@ message AppItemInfo {
   string last_updated = 8;
 }
 
-// AppItemProject represents a full appitem project
-message AppItemProject {
-  string id = 1;
-  string name = 2;
-  string description = 3;
-  string category = 4;
-  string difficulty = 5;
-  repeated string tags = 6;
-  string icon = 7;
-  map<string, AppItemVersion> versions = 8;
-  string default_version = 9;
-  string last_updated = 10;
-}
-
-// AppItemVersion represents a version of a appitem
-message AppItemVersion {
-  string apptemplate = 1;
-  string recipe = 2;
-  string readme = 3;
-}
-
 // Request messages
-message ListAppItemsRequest {}
+message ListAppItemsRequest {
+  // Pagination info
+  Pagination pagination = 1;
+
+  // May be filter by owner id
+  string owner_id = 2;
+}
 
 message ListAppItemsResponse {
-  repeated AppItemInfo appitems = 1;
+  repeated AppItem items = 1;
+
+  PaginationResponse pagination = 2;
 }
 
 message GetAppItemRequest {
@@ -109,7 +96,7 @@ message GetAppItemRequest {
 }
 
 message GetAppItemResponse {
-  AppItemProject appitem = 1;
+  AppItem appitem = 1;
 }
 
 message GetAppItemContentRequest {

@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1b\x61pptemplate/v1/models.proto\x12\x0e\x61pptemplate.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"e\n\nPagination\x12\x19\n\x08page_key\x18\x01 \x01(\tR\x07pageKey\x12\x1f\n\x0bpage_offset\x18\x02 \x01(\x05R\npageOffset\x12\x1b\n\tpage_size\x18\x03 \x01(\x05R\x08pageSize\"\xa2\x01\n\x12PaginationResponse\x12\"\n\rnext_page_key\x18\x02 \x01(\tR\x0bnextPageKey\x12(\n\x10next_page_offset\x18\x03 \x01(\x05R\x0enextPageOffset\x12\x19\n\x08has_more\x18\x04 \x01(\x08R\x07hasMore\x12#\n\rtotal_results\x18\x05 \x01(\x05R\x0ctotalResults\"\xc5\x01\n\x07\x41ppItem\x12\x39\n\ncreated_at\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x39\n\nupdated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x0e\n\x02id\x18\x03 \x01(\tR\x02id\x12\x12\n\x04name\x18\x04 \x01(\tR\x04name\x12 \n\x0b\x64\x65scription\x18\x05 \x01(\tR\x0b\x64\x65scriptionB\xaf\x01\n\x12\x63om.apptemplate.v1B\x0bModelsProtoP\x01Z3github.com/panyam/apptemplate/gen/go/apptemplate/v1\xa2\x02\x03\x41XX\xaa\x02\x0e\x41pptemplate.V1\xca\x02\x0e\x41pptemplate\\V1\xe2\x02\x1a\x41pptemplate\\V1\\GPBMetadata\xea\x02\x0f\x41pptemplate::V1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1b\x61pptemplate/v1/models.proto\x12\x0e\x61pptemplate.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"e\n\nPagination\x12\x19\n\x08page_key\x18\x01 \x01(\tR\x07pageKey\x12\x1f\n\x0bpage_offset\x18\x02 \x01(\x05R\npageOffset\x12\x1b\n\tpage_size\x18\x03 \x01(\x05R\x08pageSize\"\xa2\x01\n\x12PaginationResponse\x12\"\n\rnext_page_key\x18\x02 \x01(\tR\x0bnextPageKey\x12(\n\x10next_page_offset\x18\x03 \x01(\x05R\x0enextPageOffset\x12\x19\n\x08has_more\x18\x04 \x01(\x08R\x07hasMore\x12#\n\rtotal_results\x18\x05 \x01(\x05R\x0ctotalResults\"\x96\x02\n\x07\x41ppItem\x12\x39\n\ncreated_at\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x39\n\nupdated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x0e\n\x02id\x18\x03 \x01(\tR\x02id\x12\x12\n\x04name\x18\x04 \x01(\tR\x04name\x12 \n\x0b\x64\x65scription\x18\x05 \x01(\tR\x0b\x64\x65scription\x12\x12\n\x04tags\x18\x06 \x03(\tR\x04tags\x12\x1b\n\timage_url\x18\x07 \x01(\tR\x08imageUrl\x12\x1e\n\ndifficulty\x18\x08 \x01(\tR\ndifficultyB\xaf\x01\n\x12\x63om.apptemplate.v1B\x0bModelsProtoP\x01Z3github.com/panyam/apptemplate/gen/go/apptemplate/v1\xa2\x02\x03\x41XX\xaa\x02\x0e\x41pptemplate.V1\xca\x02\x0e\x41pptemplate\\V1\xe2\x02\x1a\x41pptemplate\\V1\\GPBMetadata\xea\x02\x0f\x41pptemplate::V1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -38,5 +38,5 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_PAGINATIONRESPONSE']._serialized_start=184
   _globals['_PAGINATIONRESPONSE']._serialized_end=346
   _globals['_APPITEM']._serialized_start=349
-  _globals['_APPITEM']._serialized_end=546
+  _globals['_APPITEM']._serialized_end=627
 # @@protoc_insertion_point(module_scope)

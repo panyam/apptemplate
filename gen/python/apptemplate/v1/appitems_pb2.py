@@ -28,7 +28,7 @@ from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 from protoc_gen_openapiv2.options import annotations_pb2 as protoc__gen__openapiv2_dot_options_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1d\x61pptemplate/v1/appitems.proto\x12\x0e\x61pptemplate.v1\x1a google/protobuf/field_mask.proto\x1a\x1b\x61pptemplate/v1/models.proto\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\"\xda\x01\n\x0b\x41ppItemInfo\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12 \n\x0b\x64\x65scription\x18\x03 \x01(\tR\x0b\x64\x65scription\x12\x1a\n\x08\x63\x61tegory\x18\x04 \x01(\tR\x08\x63\x61tegory\x12\x1e\n\ndifficulty\x18\x05 \x01(\tR\ndifficulty\x12\x12\n\x04tags\x18\x06 \x03(\tR\x04tags\x12\x12\n\x04icon\x18\x07 \x01(\tR\x04icon\x12!\n\x0clast_updated\x18\x08 \x01(\tR\x0blastUpdated\"\xad\x03\n\x0e\x41ppItemProject\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12 \n\x0b\x64\x65scription\x18\x03 \x01(\tR\x0b\x64\x65scription\x12\x1a\n\x08\x63\x61tegory\x18\x04 \x01(\tR\x08\x63\x61tegory\x12\x1e\n\ndifficulty\x18\x05 \x01(\tR\ndifficulty\x12\x12\n\x04tags\x18\x06 \x03(\tR\x04tags\x12\x12\n\x04icon\x18\x07 \x01(\tR\x04icon\x12H\n\x08versions\x18\x08 \x03(\x0b\x32,.apptemplate.v1.AppItemProject.VersionsEntryR\x08versions\x12\'\n\x0f\x64\x65\x66\x61ult_version\x18\t \x01(\tR\x0e\x64\x65\x66\x61ultVersion\x12!\n\x0clast_updated\x18\n \x01(\tR\x0blastUpdated\x1a[\n\rVersionsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x34\n\x05value\x18\x02 \x01(\x0b\x32\x1e.apptemplate.v1.AppItemVersionR\x05value:\x02\x38\x01\"b\n\x0e\x41ppItemVersion\x12 \n\x0b\x61pptemplate\x18\x01 \x01(\tR\x0b\x61pptemplate\x12\x16\n\x06recipe\x18\x02 \x01(\tR\x06recipe\x12\x16\n\x06readme\x18\x03 \x01(\tR\x06readme\"\x15\n\x13ListAppItemsRequest\"O\n\x14ListAppItemsResponse\x12\x37\n\x08\x61ppitems\x18\x01 \x03(\x0b\x32\x1b.apptemplate.v1.AppItemInfoR\x08\x61ppitems\"=\n\x11GetAppItemRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n\x07version\x18\x02 \x01(\tR\x07version\"N\n\x12GetAppItemResponse\x12\x38\n\x07\x61ppitem\x18\x01 \x01(\x0b\x32\x1e.apptemplate.v1.AppItemProjectR\x07\x61ppitem\"D\n\x18GetAppItemContentRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n\x07version\x18\x02 \x01(\tR\x07version\"\x9a\x01\n\x19GetAppItemContentResponse\x12/\n\x13\x61pptemplate_content\x18\x01 \x01(\tR\x12\x61pptemplateContent\x12%\n\x0erecipe_content\x18\x02 \x01(\tR\rrecipeContent\x12%\n\x0ereadme_content\x18\x03 \x01(\tR\rreadmeContent\"\xa3\x01\n\x14UpdateAppItemRequest\x12\x31\n\x07\x61ppitem\x18\x01 \x01(\x0b\x32\x17.apptemplate.v1.AppItemR\x07\x61ppitem\x12;\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskR\nupdateMask:\x1b\x92\x41\x18\n\x16*\x14UpdateAppItemRequest\"h\n\x15UpdateAppItemResponse\x12\x31\n\x07\x61ppitem\x18\x01 \x01(\x0b\x32\x17.apptemplate.v1.AppItemR\x07\x61ppitem:\x1c\x92\x41\x19\n\x17*\x15UpdateAppItemResponse\"&\n\x14\x44\x65leteAppItemRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"\x17\n\x15\x44\x65leteAppItemResponse\"&\n\x12GetAppItemsRequest\x12\x10\n\x03ids\x18\x01 \x03(\tR\x03ids\"\xba\x01\n\x13GetAppItemsResponse\x12M\n\x08\x61ppitems\x18\x01 \x03(\x0b\x32\x31.apptemplate.v1.GetAppItemsResponse.AppitemsEntryR\x08\x61ppitems\x1aT\n\rAppitemsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12-\n\x05value\x18\x02 \x01(\x0b\x32\x17.apptemplate.v1.AppItemR\x05value:\x02\x38\x01\"I\n\x14\x43reateAppItemRequest\x12\x31\n\x07\x61ppitem\x18\x01 \x01(\x0b\x32\x17.apptemplate.v1.AppItemR\x07\x61ppitem\"\xe5\x01\n\x15\x43reateAppItemResponse\x12\x31\n\x07\x61ppitem\x18\x01 \x01(\x0b\x32\x17.apptemplate.v1.AppItemR\x07\x61ppitem\x12Y\n\x0c\x66ield_errors\x18\x02 \x03(\x0b\x32\x36.apptemplate.v1.CreateAppItemResponse.FieldErrorsEntryR\x0b\x66ieldErrors\x1a>\n\x10\x46ieldErrorsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x02\x38\x01\x32\xe2\x05\n\x0f\x41ppItemsService\x12u\n\rCreateAppItem\x12$.apptemplate.v1.CreateAppItemRequest\x1a%.apptemplate.v1.CreateAppItemResponse\"\x17\x82\xd3\xe4\x93\x02\x11\"\x0c/v1/appitems:\x01*\x12u\n\x0bGetAppItems\x12\".apptemplate.v1.GetAppItemsRequest\x1a#.apptemplate.v1.GetAppItemsResponse\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/v1/appitems:batchGet\x12o\n\x0cListAppItems\x12#.apptemplate.v1.ListAppItemsRequest\x1a$.apptemplate.v1.ListAppItemsResponse\"\x14\x82\xd3\xe4\x93\x02\x0e\x12\x0c/v1/appitems\x12n\n\nGetAppItem\x12!.apptemplate.v1.GetAppItemRequest\x1a\".apptemplate.v1.GetAppItemResponse\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/v1/appitems/{id}\x12y\n\rDeleteAppItem\x12$.apptemplate.v1.DeleteAppItemRequest\x1a%.apptemplate.v1.DeleteAppItemResponse\"\x1b\x82\xd3\xe4\x93\x02\x15*\x13/v1/appitems/{id=*}\x12\x84\x01\n\rUpdateAppItem\x12$.apptemplate.v1.UpdateAppItemRequest\x1a%.apptemplate.v1.UpdateAppItemResponse\"&\x82\xd3\xe4\x93\x02 2\x1b/v1/appitems/{appitem.id=*}:\x01*B\xb1\x01\n\x12\x63om.apptemplate.v1B\rAppitemsProtoP\x01Z3github.com/panyam/apptemplate/gen/go/apptemplate/v1\xa2\x02\x03\x41XX\xaa\x02\x0e\x41pptemplate.V1\xca\x02\x0e\x41pptemplate\\V1\xe2\x02\x1a\x41pptemplate\\V1\\GPBMetadata\xea\x02\x0f\x41pptemplate::V1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1d\x61pptemplate/v1/appitems.proto\x12\x0e\x61pptemplate.v1\x1a google/protobuf/field_mask.proto\x1a\x1b\x61pptemplate/v1/models.proto\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\"\xda\x01\n\x0b\x41ppItemInfo\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12 \n\x0b\x64\x65scription\x18\x03 \x01(\tR\x0b\x64\x65scription\x12\x1a\n\x08\x63\x61tegory\x18\x04 \x01(\tR\x08\x63\x61tegory\x12\x1e\n\ndifficulty\x18\x05 \x01(\tR\ndifficulty\x12\x12\n\x04tags\x18\x06 \x03(\tR\x04tags\x12\x12\n\x04icon\x18\x07 \x01(\tR\x04icon\x12!\n\x0clast_updated\x18\x08 \x01(\tR\x0blastUpdated\"l\n\x13ListAppItemsRequest\x12:\n\npagination\x18\x01 \x01(\x0b\x32\x1a.apptemplate.v1.PaginationR\npagination\x12\x19\n\x08owner_id\x18\x02 \x01(\tR\x07ownerId\"\x89\x01\n\x14ListAppItemsResponse\x12-\n\x05items\x18\x01 \x03(\x0b\x32\x17.apptemplate.v1.AppItemR\x05items\x12\x42\n\npagination\x18\x02 \x01(\x0b\x32\".apptemplate.v1.PaginationResponseR\npagination\"=\n\x11GetAppItemRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n\x07version\x18\x02 \x01(\tR\x07version\"G\n\x12GetAppItemResponse\x12\x31\n\x07\x61ppitem\x18\x01 \x01(\x0b\x32\x17.apptemplate.v1.AppItemR\x07\x61ppitem\"D\n\x18GetAppItemContentRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n\x07version\x18\x02 \x01(\tR\x07version\"\x9a\x01\n\x19GetAppItemContentResponse\x12/\n\x13\x61pptemplate_content\x18\x01 \x01(\tR\x12\x61pptemplateContent\x12%\n\x0erecipe_content\x18\x02 \x01(\tR\rrecipeContent\x12%\n\x0ereadme_content\x18\x03 \x01(\tR\rreadmeContent\"\xa3\x01\n\x14UpdateAppItemRequest\x12\x31\n\x07\x61ppitem\x18\x01 \x01(\x0b\x32\x17.apptemplate.v1.AppItemR\x07\x61ppitem\x12;\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskR\nupdateMask:\x1b\x92\x41\x18\n\x16*\x14UpdateAppItemRequest\"h\n\x15UpdateAppItemResponse\x12\x31\n\x07\x61ppitem\x18\x01 \x01(\x0b\x32\x17.apptemplate.v1.AppItemR\x07\x61ppitem:\x1c\x92\x41\x19\n\x17*\x15UpdateAppItemResponse\"&\n\x14\x44\x65leteAppItemRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"\x17\n\x15\x44\x65leteAppItemResponse\"&\n\x12GetAppItemsRequest\x12\x10\n\x03ids\x18\x01 \x03(\tR\x03ids\"\xba\x01\n\x13GetAppItemsResponse\x12M\n\x08\x61ppitems\x18\x01 \x03(\x0b\x32\x31.apptemplate.v1.GetAppItemsResponse.AppitemsEntryR\x08\x61ppitems\x1aT\n\rAppitemsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12-\n\x05value\x18\x02 \x01(\x0b\x32\x17.apptemplate.v1.AppItemR\x05value:\x02\x38\x01\"I\n\x14\x43reateAppItemRequest\x12\x31\n\x07\x61ppitem\x18\x01 \x01(\x0b\x32\x17.apptemplate.v1.AppItemR\x07\x61ppitem\"\xe5\x01\n\x15\x43reateAppItemResponse\x12\x31\n\x07\x61ppitem\x18\x01 \x01(\x0b\x32\x17.apptemplate.v1.AppItemR\x07\x61ppitem\x12Y\n\x0c\x66ield_errors\x18\x02 \x03(\x0b\x32\x36.apptemplate.v1.CreateAppItemResponse.FieldErrorsEntryR\x0b\x66ieldErrors\x1a>\n\x10\x46ieldErrorsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x02\x38\x01\x32\xe2\x05\n\x0f\x41ppItemsService\x12u\n\rCreateAppItem\x12$.apptemplate.v1.CreateAppItemRequest\x1a%.apptemplate.v1.CreateAppItemResponse\"\x17\x82\xd3\xe4\x93\x02\x11\"\x0c/v1/appitems:\x01*\x12u\n\x0bGetAppItems\x12\".apptemplate.v1.GetAppItemsRequest\x1a#.apptemplate.v1.GetAppItemsResponse\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/v1/appitems:batchGet\x12o\n\x0cListAppItems\x12#.apptemplate.v1.ListAppItemsRequest\x1a$.apptemplate.v1.ListAppItemsResponse\"\x14\x82\xd3\xe4\x93\x02\x0e\x12\x0c/v1/appitems\x12n\n\nGetAppItem\x12!.apptemplate.v1.GetAppItemRequest\x1a\".apptemplate.v1.GetAppItemResponse\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/v1/appitems/{id}\x12y\n\rDeleteAppItem\x12$.apptemplate.v1.DeleteAppItemRequest\x1a%.apptemplate.v1.DeleteAppItemResponse\"\x1b\x82\xd3\xe4\x93\x02\x15*\x13/v1/appitems/{id=*}\x12\x84\x01\n\rUpdateAppItem\x12$.apptemplate.v1.UpdateAppItemRequest\x1a%.apptemplate.v1.UpdateAppItemResponse\"&\x82\xd3\xe4\x93\x02 2\x1b/v1/appitems/{appitem.id=*}:\x01*B\xb1\x01\n\x12\x63om.apptemplate.v1B\rAppitemsProtoP\x01Z3github.com/panyam/apptemplate/gen/go/apptemplate/v1\xa2\x02\x03\x41XX\xaa\x02\x0e\x41pptemplate.V1\xca\x02\x0e\x41pptemplate\\V1\xe2\x02\x1a\x41pptemplate\\V1\\GPBMetadata\xea\x02\x0f\x41pptemplate::V1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -36,8 +36,6 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'apptemplate.v1.appitems_pb2
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'\n\022com.apptemplate.v1B\rAppitemsProtoP\001Z3github.com/panyam/apptemplate/gen/go/apptemplate/v1\242\002\003AXX\252\002\016Apptemplate.V1\312\002\016Apptemplate\\V1\342\002\032Apptemplate\\V1\\GPBMetadata\352\002\017Apptemplate::V1'
-  _globals['_APPITEMPROJECT_VERSIONSENTRY']._loaded_options = None
-  _globals['_APPITEMPROJECT_VERSIONSENTRY']._serialized_options = b'8\001'
   _globals['_UPDATEAPPITEMREQUEST']._loaded_options = None
   _globals['_UPDATEAPPITEMREQUEST']._serialized_options = b'\222A\030\n\026*\024UpdateAppItemRequest'
   _globals['_UPDATEAPPITEMRESPONSE']._loaded_options = None
@@ -60,44 +58,38 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_APPITEMSSERVICE'].methods_by_name['UpdateAppItem']._serialized_options = b'\202\323\344\223\002 2\033/v1/appitems/{appitem.id=*}:\001*'
   _globals['_APPITEMINFO']._serialized_start=191
   _globals['_APPITEMINFO']._serialized_end=409
-  _globals['_APPITEMPROJECT']._serialized_start=412
-  _globals['_APPITEMPROJECT']._serialized_end=841
-  _globals['_APPITEMPROJECT_VERSIONSENTRY']._serialized_start=750
-  _globals['_APPITEMPROJECT_VERSIONSENTRY']._serialized_end=841
-  _globals['_APPITEMVERSION']._serialized_start=843
-  _globals['_APPITEMVERSION']._serialized_end=941
-  _globals['_LISTAPPITEMSREQUEST']._serialized_start=943
-  _globals['_LISTAPPITEMSREQUEST']._serialized_end=964
-  _globals['_LISTAPPITEMSRESPONSE']._serialized_start=966
-  _globals['_LISTAPPITEMSRESPONSE']._serialized_end=1045
-  _globals['_GETAPPITEMREQUEST']._serialized_start=1047
-  _globals['_GETAPPITEMREQUEST']._serialized_end=1108
-  _globals['_GETAPPITEMRESPONSE']._serialized_start=1110
-  _globals['_GETAPPITEMRESPONSE']._serialized_end=1188
-  _globals['_GETAPPITEMCONTENTREQUEST']._serialized_start=1190
-  _globals['_GETAPPITEMCONTENTREQUEST']._serialized_end=1258
-  _globals['_GETAPPITEMCONTENTRESPONSE']._serialized_start=1261
-  _globals['_GETAPPITEMCONTENTRESPONSE']._serialized_end=1415
-  _globals['_UPDATEAPPITEMREQUEST']._serialized_start=1418
-  _globals['_UPDATEAPPITEMREQUEST']._serialized_end=1581
-  _globals['_UPDATEAPPITEMRESPONSE']._serialized_start=1583
-  _globals['_UPDATEAPPITEMRESPONSE']._serialized_end=1687
-  _globals['_DELETEAPPITEMREQUEST']._serialized_start=1689
-  _globals['_DELETEAPPITEMREQUEST']._serialized_end=1727
-  _globals['_DELETEAPPITEMRESPONSE']._serialized_start=1729
-  _globals['_DELETEAPPITEMRESPONSE']._serialized_end=1752
-  _globals['_GETAPPITEMSREQUEST']._serialized_start=1754
-  _globals['_GETAPPITEMSREQUEST']._serialized_end=1792
-  _globals['_GETAPPITEMSRESPONSE']._serialized_start=1795
-  _globals['_GETAPPITEMSRESPONSE']._serialized_end=1981
-  _globals['_GETAPPITEMSRESPONSE_APPITEMSENTRY']._serialized_start=1897
-  _globals['_GETAPPITEMSRESPONSE_APPITEMSENTRY']._serialized_end=1981
-  _globals['_CREATEAPPITEMREQUEST']._serialized_start=1983
-  _globals['_CREATEAPPITEMREQUEST']._serialized_end=2056
-  _globals['_CREATEAPPITEMRESPONSE']._serialized_start=2059
-  _globals['_CREATEAPPITEMRESPONSE']._serialized_end=2288
-  _globals['_CREATEAPPITEMRESPONSE_FIELDERRORSENTRY']._serialized_start=2226
-  _globals['_CREATEAPPITEMRESPONSE_FIELDERRORSENTRY']._serialized_end=2288
-  _globals['_APPITEMSSERVICE']._serialized_start=2291
-  _globals['_APPITEMSSERVICE']._serialized_end=3029
+  _globals['_LISTAPPITEMSREQUEST']._serialized_start=411
+  _globals['_LISTAPPITEMSREQUEST']._serialized_end=519
+  _globals['_LISTAPPITEMSRESPONSE']._serialized_start=522
+  _globals['_LISTAPPITEMSRESPONSE']._serialized_end=659
+  _globals['_GETAPPITEMREQUEST']._serialized_start=661
+  _globals['_GETAPPITEMREQUEST']._serialized_end=722
+  _globals['_GETAPPITEMRESPONSE']._serialized_start=724
+  _globals['_GETAPPITEMRESPONSE']._serialized_end=795
+  _globals['_GETAPPITEMCONTENTREQUEST']._serialized_start=797
+  _globals['_GETAPPITEMCONTENTREQUEST']._serialized_end=865
+  _globals['_GETAPPITEMCONTENTRESPONSE']._serialized_start=868
+  _globals['_GETAPPITEMCONTENTRESPONSE']._serialized_end=1022
+  _globals['_UPDATEAPPITEMREQUEST']._serialized_start=1025
+  _globals['_UPDATEAPPITEMREQUEST']._serialized_end=1188
+  _globals['_UPDATEAPPITEMRESPONSE']._serialized_start=1190
+  _globals['_UPDATEAPPITEMRESPONSE']._serialized_end=1294
+  _globals['_DELETEAPPITEMREQUEST']._serialized_start=1296
+  _globals['_DELETEAPPITEMREQUEST']._serialized_end=1334
+  _globals['_DELETEAPPITEMRESPONSE']._serialized_start=1336
+  _globals['_DELETEAPPITEMRESPONSE']._serialized_end=1359
+  _globals['_GETAPPITEMSREQUEST']._serialized_start=1361
+  _globals['_GETAPPITEMSREQUEST']._serialized_end=1399
+  _globals['_GETAPPITEMSRESPONSE']._serialized_start=1402
+  _globals['_GETAPPITEMSRESPONSE']._serialized_end=1588
+  _globals['_GETAPPITEMSRESPONSE_APPITEMSENTRY']._serialized_start=1504
+  _globals['_GETAPPITEMSRESPONSE_APPITEMSENTRY']._serialized_end=1588
+  _globals['_CREATEAPPITEMREQUEST']._serialized_start=1590
+  _globals['_CREATEAPPITEMREQUEST']._serialized_end=1663
+  _globals['_CREATEAPPITEMRESPONSE']._serialized_start=1666
+  _globals['_CREATEAPPITEMRESPONSE']._serialized_end=1895
+  _globals['_CREATEAPPITEMRESPONSE_FIELDERRORSENTRY']._serialized_start=1833
+  _globals['_CREATEAPPITEMRESPONSE_FIELDERRORSENTRY']._serialized_end=1895
+  _globals['_APPITEMSSERVICE']._serialized_start=1898
+  _globals['_APPITEMSSERVICE']._serialized_end=2636
 # @@protoc_insertion_point(module_scope)

@@ -34,6 +34,38 @@
             }
           }
         },
+        "parameters": [
+          {
+            "name": "pagination.pageKey",
+            "description": "*\nInstead of an offset an abstract  \"page\" key is provided that offers\nan opaque \"pointer\" into some offset in a result set.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pagination.pageOffset",
+            "description": "*\nIf a pagekey is not supported we can also support a direct integer offset\nfor cases where it makes sense.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pagination.pageSize",
+            "description": "*\nNumber of results to return.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "ownerId",
+            "description": "May be filter by owner id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
         "tags": [
           "AppItemsService"
         ]
@@ -122,6 +154,21 @@
                     "description": {
                       "type": "string",
                       "title": "Description if appitem has a description"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "Some tags"
+                    },
+                    "imageUrl": {
+                      "type": "string",
+                      "title": "A possible image url"
+                    },
+                    "difficulty": {
+                      "type": "string",
+                      "title": "Difficulty - exmaple attribute"
                     }
                   },
                   "title": "*\nAppItem being updated"
@@ -297,98 +344,23 @@
         "description": {
           "type": "string",
           "title": "Description if appitem has a description"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Some tags"
+        },
+        "imageUrl": {
+          "type": "string",
+          "title": "A possible image url"
+        },
+        "difficulty": {
+          "type": "string",
+          "title": "Difficulty - exmaple attribute"
         }
       }
-    },
-    "v1AppItemInfo": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "category": {
-          "type": "string"
-        },
-        "difficulty": {
-          "type": "string"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "icon": {
-          "type": "string"
-        },
-        "lastUpdated": {
-          "type": "string"
-        }
-      },
-      "title": "AppItemInfo represents a appitem in the catalog"
-    },
-    "v1AppItemProject": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "category": {
-          "type": "string"
-        },
-        "difficulty": {
-          "type": "string"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "icon": {
-          "type": "string"
-        },
-        "versions": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/v1AppItemVersion"
-          }
-        },
-        "defaultVersion": {
-          "type": "string"
-        },
-        "lastUpdated": {
-          "type": "string"
-        }
-      },
-      "title": "AppItemProject represents a full appitem project"
-    },
-    "v1AppItemVersion": {
-      "type": "object",
-      "properties": {
-        "apptemplate": {
-          "type": "string"
-        },
-        "recipe": {
-          "type": "string"
-        },
-        "readme": {
-          "type": "string"
-        }
-      },
-      "title": "AppItemVersion represents a version of a appitem"
     },
     "v1CreateAppItemRequest": {
       "type": "object",
@@ -425,7 +397,7 @@
       "type": "object",
       "properties": {
         "appitem": {
-          "$ref": "#/definitions/v1AppItemProject"
+          "$ref": "#/definitions/v1AppItem"
         }
       }
     },
@@ -444,12 +416,57 @@
     "v1ListAppItemsResponse": {
       "type": "object",
       "properties": {
-        "appitems": {
+        "items": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/v1AppItemInfo"
+            "$ref": "#/definitions/v1AppItem"
           }
+        },
+        "pagination": {
+          "$ref": "#/definitions/v1PaginationResponse"
+        }
+      }
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageKey": {
+          "type": "string",
+          "description": "*\nInstead of an offset an abstract  \"page\" key is provided that offers\nan opaque \"pointer\" into some offset in a result set."
+        },
+        "pageOffset": {
+          "type": "integer",
+          "format": "int32",
+          "description": "*\nIf a pagekey is not supported we can also support a direct integer offset\nfor cases where it makes sense."
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "description": "*\nNumber of results to return."
+        }
+      }
+    },
+    "v1PaginationResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageKey": {
+          "type": "string",
+          "description": "*\nThe key/pointer string that subsequent List requests should pass to\ncontinue the pagination."
+        },
+        "nextPageOffset": {
+          "type": "integer",
+          "format": "int32",
+          "title": "*\nAlso support an integer offset if possible"
+        },
+        "hasMore": {
+          "type": "boolean",
+          "description": "*\nWhether theere are more results."
+        },
+        "totalResults": {
+          "type": "integer",
+          "format": "int32",
+          "description": "*\nTotal number of results."
         }
       }
     },

@@ -178,7 +178,13 @@ type AppItem struct {
 	// Name if items have names
 	Name string `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
 	// Description if appitem has a description
-	Description   string `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
+	Description string `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
+	// Some tags
+	Tags []string `protobuf:"bytes,6,rep,name=tags,proto3" json:"tags,omitempty"`
+	// A possible image url
+	ImageUrl string `protobuf:"bytes,7,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`
+	// Difficulty - exmaple attribute
+	Difficulty    string `protobuf:"bytes,8,opt,name=difficulty,proto3" json:"difficulty,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -248,6 +254,27 @@ func (x *AppItem) GetDescription() string {
 	return ""
 }
 
+func (x *AppItem) GetTags() []string {
+	if x != nil {
+		return x.Tags
+	}
+	return nil
+}
+
+func (x *AppItem) GetImageUrl() string {
+	if x != nil {
+		return x.ImageUrl
+	}
+	return ""
+}
+
+func (x *AppItem) GetDifficulty() string {
+	if x != nil {
+		return x.Difficulty
+	}
+	return ""
+}
+
 var File_apptemplate_v1_models_proto protoreflect.FileDescriptor
 
 const file_apptemplate_v1_models_proto_rawDesc = "" +
@@ -263,7 +290,7 @@ const file_apptemplate_v1_models_proto_rawDesc = "" +
 	"\rnext_page_key\x18\x02 \x01(\tR\vnextPageKey\x12(\n" +
 	"\x10next_page_offset\x18\x03 \x01(\x05R\x0enextPageOffset\x12\x19\n" +
 	"\bhas_more\x18\x04 \x01(\bR\ahasMore\x12#\n" +
-	"\rtotal_results\x18\x05 \x01(\x05R\ftotalResults\"\xc5\x01\n" +
+	"\rtotal_results\x18\x05 \x01(\x05R\ftotalResults\"\x96\x02\n" +
 	"\aAppItem\x129\n" +
 	"\n" +
 	"created_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
@@ -271,7 +298,12 @@ const file_apptemplate_v1_models_proto_rawDesc = "" +
 	"updated_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x0e\n" +
 	"\x02id\x18\x03 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x04 \x01(\tR\x04name\x12 \n" +
-	"\vdescription\x18\x05 \x01(\tR\vdescriptionB\xaf\x01\n" +
+	"\vdescription\x18\x05 \x01(\tR\vdescription\x12\x12\n" +
+	"\x04tags\x18\x06 \x03(\tR\x04tags\x12\x1b\n" +
+	"\timage_url\x18\a \x01(\tR\bimageUrl\x12\x1e\n" +
+	"\n" +
+	"difficulty\x18\b \x01(\tR\n" +
+	"difficultyB\xaf\x01\n" +
 	"\x12com.apptemplate.v1B\vModelsProtoP\x01Z3github.com/panyam/apptemplate/gen/go/apptemplate/v1\xa2\x02\x03AXX\xaa\x02\x0eApptemplate.V1\xca\x02\x0eApptemplate\\V1\xe2\x02\x1aApptemplate\\V1\\GPBMetadata\xea\x02\x0fApptemplate::V1b\x06proto3"
 
 var (

@@ -125,194 +125,20 @@ func (x *AppItemInfo) GetLastUpdated() string {
 	return ""
 }
 
-// AppItemProject represents a full appitem project
-type AppItemProject struct {
-	state          protoimpl.MessageState     `protogen:"open.v1"`
-	Id             string                     `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name           string                     `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Description    string                     `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	Category       string                     `protobuf:"bytes,4,opt,name=category,proto3" json:"category,omitempty"`
-	Difficulty     string                     `protobuf:"bytes,5,opt,name=difficulty,proto3" json:"difficulty,omitempty"`
-	Tags           []string                   `protobuf:"bytes,6,rep,name=tags,proto3" json:"tags,omitempty"`
-	Icon           string                     `protobuf:"bytes,7,opt,name=icon,proto3" json:"icon,omitempty"`
-	Versions       map[string]*AppItemVersion `protobuf:"bytes,8,rep,name=versions,proto3" json:"versions,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	DefaultVersion string                     `protobuf:"bytes,9,opt,name=default_version,json=defaultVersion,proto3" json:"default_version,omitempty"`
-	LastUpdated    string                     `protobuf:"bytes,10,opt,name=last_updated,json=lastUpdated,proto3" json:"last_updated,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *AppItemProject) Reset() {
-	*x = AppItemProject{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AppItemProject) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AppItemProject) ProtoMessage() {}
-
-func (x *AppItemProject) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AppItemProject.ProtoReflect.Descriptor instead.
-func (*AppItemProject) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *AppItemProject) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *AppItemProject) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *AppItemProject) GetDescription() string {
-	if x != nil {
-		return x.Description
-	}
-	return ""
-}
-
-func (x *AppItemProject) GetCategory() string {
-	if x != nil {
-		return x.Category
-	}
-	return ""
-}
-
-func (x *AppItemProject) GetDifficulty() string {
-	if x != nil {
-		return x.Difficulty
-	}
-	return ""
-}
-
-func (x *AppItemProject) GetTags() []string {
-	if x != nil {
-		return x.Tags
-	}
-	return nil
-}
-
-func (x *AppItemProject) GetIcon() string {
-	if x != nil {
-		return x.Icon
-	}
-	return ""
-}
-
-func (x *AppItemProject) GetVersions() map[string]*AppItemVersion {
-	if x != nil {
-		return x.Versions
-	}
-	return nil
-}
-
-func (x *AppItemProject) GetDefaultVersion() string {
-	if x != nil {
-		return x.DefaultVersion
-	}
-	return ""
-}
-
-func (x *AppItemProject) GetLastUpdated() string {
-	if x != nil {
-		return x.LastUpdated
-	}
-	return ""
-}
-
-// AppItemVersion represents a version of a appitem
-type AppItemVersion struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Apptemplate   string                 `protobuf:"bytes,1,opt,name=apptemplate,proto3" json:"apptemplate,omitempty"`
-	Recipe        string                 `protobuf:"bytes,2,opt,name=recipe,proto3" json:"recipe,omitempty"`
-	Readme        string                 `protobuf:"bytes,3,opt,name=readme,proto3" json:"readme,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AppItemVersion) Reset() {
-	*x = AppItemVersion{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AppItemVersion) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AppItemVersion) ProtoMessage() {}
-
-func (x *AppItemVersion) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AppItemVersion.ProtoReflect.Descriptor instead.
-func (*AppItemVersion) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *AppItemVersion) GetApptemplate() string {
-	if x != nil {
-		return x.Apptemplate
-	}
-	return ""
-}
-
-func (x *AppItemVersion) GetRecipe() string {
-	if x != nil {
-		return x.Recipe
-	}
-	return ""
-}
-
-func (x *AppItemVersion) GetReadme() string {
-	if x != nil {
-		return x.Readme
-	}
-	return ""
-}
-
 // Request messages
 type ListAppItemsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Pagination info
+	Pagination *Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// May be filter by owner id
+	OwnerId       string `protobuf:"bytes,2,opt,name=owner_id,json=ownerId,proto3" json:"owner_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListAppItemsRequest) Reset() {
 	*x = ListAppItemsRequest{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[3]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -324,7 +150,7 @@ func (x *ListAppItemsRequest) String() string {
 func (*ListAppItemsRequest) ProtoMessage() {}
 
 func (x *ListAppItemsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[3]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -337,19 +163,34 @@ func (x *ListAppItemsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAppItemsRequest.ProtoReflect.Descriptor instead.
 func (*ListAppItemsRequest) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{3}
+	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ListAppItemsRequest) GetPagination() *Pagination {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListAppItemsRequest) GetOwnerId() string {
+	if x != nil {
+		return x.OwnerId
+	}
+	return ""
 }
 
 type ListAppItemsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Appitems      []*AppItemInfo         `protobuf:"bytes,1,rep,name=appitems,proto3" json:"appitems,omitempty"`
+	Items         []*AppItem             `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	Pagination    *PaginationResponse    `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListAppItemsResponse) Reset() {
 	*x = ListAppItemsResponse{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[4]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -361,7 +202,7 @@ func (x *ListAppItemsResponse) String() string {
 func (*ListAppItemsResponse) ProtoMessage() {}
 
 func (x *ListAppItemsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[4]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -374,12 +215,19 @@ func (x *ListAppItemsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAppItemsResponse.ProtoReflect.Descriptor instead.
 func (*ListAppItemsResponse) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{4}
+	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *ListAppItemsResponse) GetAppitems() []*AppItemInfo {
+func (x *ListAppItemsResponse) GetItems() []*AppItem {
 	if x != nil {
-		return x.Appitems
+		return x.Items
+	}
+	return nil
+}
+
+func (x *ListAppItemsResponse) GetPagination() *PaginationResponse {
+	if x != nil {
+		return x.Pagination
 	}
 	return nil
 }
@@ -394,7 +242,7 @@ type GetAppItemRequest struct {
 
 func (x *GetAppItemRequest) Reset() {
 	*x = GetAppItemRequest{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[5]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -406,7 +254,7 @@ func (x *GetAppItemRequest) String() string {
 func (*GetAppItemRequest) ProtoMessage() {}
 
 func (x *GetAppItemRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[5]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -419,7 +267,7 @@ func (x *GetAppItemRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAppItemRequest.ProtoReflect.Descriptor instead.
 func (*GetAppItemRequest) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{5}
+	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *GetAppItemRequest) GetId() string {
@@ -438,14 +286,14 @@ func (x *GetAppItemRequest) GetVersion() string {
 
 type GetAppItemResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Appitem       *AppItemProject        `protobuf:"bytes,1,opt,name=appitem,proto3" json:"appitem,omitempty"`
+	Appitem       *AppItem               `protobuf:"bytes,1,opt,name=appitem,proto3" json:"appitem,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetAppItemResponse) Reset() {
 	*x = GetAppItemResponse{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[6]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -457,7 +305,7 @@ func (x *GetAppItemResponse) String() string {
 func (*GetAppItemResponse) ProtoMessage() {}
 
 func (x *GetAppItemResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[6]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -470,10 +318,10 @@ func (x *GetAppItemResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAppItemResponse.ProtoReflect.Descriptor instead.
 func (*GetAppItemResponse) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{6}
+	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *GetAppItemResponse) GetAppitem() *AppItemProject {
+func (x *GetAppItemResponse) GetAppitem() *AppItem {
 	if x != nil {
 		return x.Appitem
 	}
@@ -490,7 +338,7 @@ type GetAppItemContentRequest struct {
 
 func (x *GetAppItemContentRequest) Reset() {
 	*x = GetAppItemContentRequest{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[7]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -502,7 +350,7 @@ func (x *GetAppItemContentRequest) String() string {
 func (*GetAppItemContentRequest) ProtoMessage() {}
 
 func (x *GetAppItemContentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[7]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -515,7 +363,7 @@ func (x *GetAppItemContentRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAppItemContentRequest.ProtoReflect.Descriptor instead.
 func (*GetAppItemContentRequest) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{7}
+	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetAppItemContentRequest) GetId() string {
@@ -543,7 +391,7 @@ type GetAppItemContentResponse struct {
 
 func (x *GetAppItemContentResponse) Reset() {
 	*x = GetAppItemContentResponse{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[8]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -555,7 +403,7 @@ func (x *GetAppItemContentResponse) String() string {
 func (*GetAppItemContentResponse) ProtoMessage() {}
 
 func (x *GetAppItemContentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[8]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -568,7 +416,7 @@ func (x *GetAppItemContentResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAppItemContentResponse.ProtoReflect.Descriptor instead.
 func (*GetAppItemContentResponse) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{8}
+	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *GetAppItemContentResponse) GetApptemplateContent() string {
@@ -606,7 +454,7 @@ type UpdateAppItemRequest struct {
 
 func (x *UpdateAppItemRequest) Reset() {
 	*x = UpdateAppItemRequest{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[9]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -618,7 +466,7 @@ func (x *UpdateAppItemRequest) String() string {
 func (*UpdateAppItemRequest) ProtoMessage() {}
 
 func (x *UpdateAppItemRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[9]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -631,7 +479,7 @@ func (x *UpdateAppItemRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAppItemRequest.ProtoReflect.Descriptor instead.
 func (*UpdateAppItemRequest) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{9}
+	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *UpdateAppItemRequest) GetAppitem() *AppItem {
@@ -661,7 +509,7 @@ type UpdateAppItemResponse struct {
 
 func (x *UpdateAppItemResponse) Reset() {
 	*x = UpdateAppItemResponse{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[10]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -673,7 +521,7 @@ func (x *UpdateAppItemResponse) String() string {
 func (*UpdateAppItemResponse) ProtoMessage() {}
 
 func (x *UpdateAppItemResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[10]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -686,7 +534,7 @@ func (x *UpdateAppItemResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAppItemResponse.ProtoReflect.Descriptor instead.
 func (*UpdateAppItemResponse) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{10}
+	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *UpdateAppItemResponse) GetAppitem() *AppItem {
@@ -709,7 +557,7 @@ type DeleteAppItemRequest struct {
 
 func (x *DeleteAppItemRequest) Reset() {
 	*x = DeleteAppItemRequest{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[11]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -721,7 +569,7 @@ func (x *DeleteAppItemRequest) String() string {
 func (*DeleteAppItemRequest) ProtoMessage() {}
 
 func (x *DeleteAppItemRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[11]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -734,7 +582,7 @@ func (x *DeleteAppItemRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteAppItemRequest.ProtoReflect.Descriptor instead.
 func (*DeleteAppItemRequest) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{11}
+	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *DeleteAppItemRequest) GetId() string {
@@ -754,7 +602,7 @@ type DeleteAppItemResponse struct {
 
 func (x *DeleteAppItemResponse) Reset() {
 	*x = DeleteAppItemResponse{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[12]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -766,7 +614,7 @@ func (x *DeleteAppItemResponse) String() string {
 func (*DeleteAppItemResponse) ProtoMessage() {}
 
 func (x *DeleteAppItemResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[12]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -779,7 +627,7 @@ func (x *DeleteAppItemResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteAppItemResponse.ProtoReflect.Descriptor instead.
 func (*DeleteAppItemResponse) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{12}
+	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{10}
 }
 
 // *
@@ -795,7 +643,7 @@ type GetAppItemsRequest struct {
 
 func (x *GetAppItemsRequest) Reset() {
 	*x = GetAppItemsRequest{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[13]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -807,7 +655,7 @@ func (x *GetAppItemsRequest) String() string {
 func (*GetAppItemsRequest) ProtoMessage() {}
 
 func (x *GetAppItemsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[13]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -820,7 +668,7 @@ func (x *GetAppItemsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAppItemsRequest.ProtoReflect.Descriptor instead.
 func (*GetAppItemsRequest) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{13}
+	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *GetAppItemsRequest) GetIds() []string {
@@ -841,7 +689,7 @@ type GetAppItemsResponse struct {
 
 func (x *GetAppItemsResponse) Reset() {
 	*x = GetAppItemsResponse{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[14]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -853,7 +701,7 @@ func (x *GetAppItemsResponse) String() string {
 func (*GetAppItemsResponse) ProtoMessage() {}
 
 func (x *GetAppItemsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[14]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -866,7 +714,7 @@ func (x *GetAppItemsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAppItemsResponse.ProtoReflect.Descriptor instead.
 func (*GetAppItemsResponse) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{14}
+	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *GetAppItemsResponse) GetAppitems() map[string]*AppItem {
@@ -889,7 +737,7 @@ type CreateAppItemRequest struct {
 
 func (x *CreateAppItemRequest) Reset() {
 	*x = CreateAppItemRequest{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[15]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -901,7 +749,7 @@ func (x *CreateAppItemRequest) String() string {
 func (*CreateAppItemRequest) ProtoMessage() {}
 
 func (x *CreateAppItemRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[15]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -914,7 +762,7 @@ func (x *CreateAppItemRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateAppItemRequest.ProtoReflect.Descriptor instead.
 func (*CreateAppItemRequest) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{15}
+	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *CreateAppItemRequest) GetAppitem() *AppItem {
@@ -940,7 +788,7 @@ type CreateAppItemResponse struct {
 
 func (x *CreateAppItemResponse) Reset() {
 	*x = CreateAppItemResponse{}
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[16]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -952,7 +800,7 @@ func (x *CreateAppItemResponse) String() string {
 func (*CreateAppItemResponse) ProtoMessage() {}
 
 func (x *CreateAppItemResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_apptemplate_v1_appitems_proto_msgTypes[16]
+	mi := &file_apptemplate_v1_appitems_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -965,7 +813,7 @@ func (x *CreateAppItemResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateAppItemResponse.ProtoReflect.Descriptor instead.
 func (*CreateAppItemResponse) Descriptor() ([]byte, []int) {
-	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{16}
+	return file_apptemplate_v1_appitems_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *CreateAppItemResponse) GetAppitem() *AppItem {
@@ -997,36 +845,22 @@ const file_apptemplate_v1_appitems_proto_rawDesc = "" +
 	"difficulty\x12\x12\n" +
 	"\x04tags\x18\x06 \x03(\tR\x04tags\x12\x12\n" +
 	"\x04icon\x18\a \x01(\tR\x04icon\x12!\n" +
-	"\flast_updated\x18\b \x01(\tR\vlastUpdated\"\xad\x03\n" +
-	"\x0eAppItemProject\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
-	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x1a\n" +
-	"\bcategory\x18\x04 \x01(\tR\bcategory\x12\x1e\n" +
+	"\flast_updated\x18\b \x01(\tR\vlastUpdated\"l\n" +
+	"\x13ListAppItemsRequest\x12:\n" +
 	"\n" +
-	"difficulty\x18\x05 \x01(\tR\n" +
-	"difficulty\x12\x12\n" +
-	"\x04tags\x18\x06 \x03(\tR\x04tags\x12\x12\n" +
-	"\x04icon\x18\a \x01(\tR\x04icon\x12H\n" +
-	"\bversions\x18\b \x03(\v2,.apptemplate.v1.AppItemProject.VersionsEntryR\bversions\x12'\n" +
-	"\x0fdefault_version\x18\t \x01(\tR\x0edefaultVersion\x12!\n" +
-	"\flast_updated\x18\n" +
-	" \x01(\tR\vlastUpdated\x1a[\n" +
-	"\rVersionsEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x124\n" +
-	"\x05value\x18\x02 \x01(\v2\x1e.apptemplate.v1.AppItemVersionR\x05value:\x028\x01\"b\n" +
-	"\x0eAppItemVersion\x12 \n" +
-	"\vapptemplate\x18\x01 \x01(\tR\vapptemplate\x12\x16\n" +
-	"\x06recipe\x18\x02 \x01(\tR\x06recipe\x12\x16\n" +
-	"\x06readme\x18\x03 \x01(\tR\x06readme\"\x15\n" +
-	"\x13ListAppItemsRequest\"O\n" +
-	"\x14ListAppItemsResponse\x127\n" +
-	"\bappitems\x18\x01 \x03(\v2\x1b.apptemplate.v1.AppItemInfoR\bappitems\"=\n" +
+	"pagination\x18\x01 \x01(\v2\x1a.apptemplate.v1.PaginationR\n" +
+	"pagination\x12\x19\n" +
+	"\bowner_id\x18\x02 \x01(\tR\aownerId\"\x89\x01\n" +
+	"\x14ListAppItemsResponse\x12-\n" +
+	"\x05items\x18\x01 \x03(\v2\x17.apptemplate.v1.AppItemR\x05items\x12B\n" +
+	"\n" +
+	"pagination\x18\x02 \x01(\v2\".apptemplate.v1.PaginationResponseR\n" +
+	"pagination\"=\n" +
 	"\x11GetAppItemRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n" +
-	"\aversion\x18\x02 \x01(\tR\aversion\"N\n" +
-	"\x12GetAppItemResponse\x128\n" +
-	"\aappitem\x18\x01 \x01(\v2\x1e.apptemplate.v1.AppItemProjectR\aappitem\"D\n" +
+	"\aversion\x18\x02 \x01(\tR\aversion\"G\n" +
+	"\x12GetAppItemResponse\x121\n" +
+	"\aappitem\x18\x01 \x01(\v2\x17.apptemplate.v1.AppItemR\aappitem\"D\n" +
 	"\x18GetAppItemContentRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n" +
 	"\aversion\x18\x02 \x01(\tR\aversion\"\x9a\x01\n" +
@@ -1082,56 +916,55 @@ func file_apptemplate_v1_appitems_proto_rawDescGZIP() []byte {
 	return file_apptemplate_v1_appitems_proto_rawDescData
 }
 
-var file_apptemplate_v1_appitems_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
+var file_apptemplate_v1_appitems_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_apptemplate_v1_appitems_proto_goTypes = []any{
 	(*AppItemInfo)(nil),               // 0: apptemplate.v1.AppItemInfo
-	(*AppItemProject)(nil),            // 1: apptemplate.v1.AppItemProject
-	(*AppItemVersion)(nil),            // 2: apptemplate.v1.AppItemVersion
-	(*ListAppItemsRequest)(nil),       // 3: apptemplate.v1.ListAppItemsRequest
-	(*ListAppItemsResponse)(nil),      // 4: apptemplate.v1.ListAppItemsResponse
-	(*GetAppItemRequest)(nil),         // 5: apptemplate.v1.GetAppItemRequest
-	(*GetAppItemResponse)(nil),        // 6: apptemplate.v1.GetAppItemResponse
-	(*GetAppItemContentRequest)(nil),  // 7: apptemplate.v1.GetAppItemContentRequest
-	(*GetAppItemContentResponse)(nil), // 8: apptemplate.v1.GetAppItemContentResponse
-	(*UpdateAppItemRequest)(nil),      // 9: apptemplate.v1.UpdateAppItemRequest
-	(*UpdateAppItemResponse)(nil),     // 10: apptemplate.v1.UpdateAppItemResponse
-	(*DeleteAppItemRequest)(nil),      // 11: apptemplate.v1.DeleteAppItemRequest
-	(*DeleteAppItemResponse)(nil),     // 12: apptemplate.v1.DeleteAppItemResponse
-	(*GetAppItemsRequest)(nil),        // 13: apptemplate.v1.GetAppItemsRequest
-	(*GetAppItemsResponse)(nil),       // 14: apptemplate.v1.GetAppItemsResponse
-	(*CreateAppItemRequest)(nil),      // 15: apptemplate.v1.CreateAppItemRequest
-	(*CreateAppItemResponse)(nil),     // 16: apptemplate.v1.CreateAppItemResponse
-	nil,                               // 17: apptemplate.v1.AppItemProject.VersionsEntry
-	nil,                               // 18: apptemplate.v1.GetAppItemsResponse.AppitemsEntry
-	nil,                               // 19: apptemplate.v1.CreateAppItemResponse.FieldErrorsEntry
-	(*AppItem)(nil),                   // 20: apptemplate.v1.AppItem
-	(*fieldmaskpb.FieldMask)(nil),     // 21: google.protobuf.FieldMask
+	(*ListAppItemsRequest)(nil),       // 1: apptemplate.v1.ListAppItemsRequest
+	(*ListAppItemsResponse)(nil),      // 2: apptemplate.v1.ListAppItemsResponse
+	(*GetAppItemRequest)(nil),         // 3: apptemplate.v1.GetAppItemRequest
+	(*GetAppItemResponse)(nil),        // 4: apptemplate.v1.GetAppItemResponse
+	(*GetAppItemContentRequest)(nil),  // 5: apptemplate.v1.GetAppItemContentRequest
+	(*GetAppItemContentResponse)(nil), // 6: apptemplate.v1.GetAppItemContentResponse
+	(*UpdateAppItemRequest)(nil),      // 7: apptemplate.v1.UpdateAppItemRequest
+	(*UpdateAppItemResponse)(nil),     // 8: apptemplate.v1.UpdateAppItemResponse
+	(*DeleteAppItemRequest)(nil),      // 9: apptemplate.v1.DeleteAppItemRequest
+	(*DeleteAppItemResponse)(nil),     // 10: apptemplate.v1.DeleteAppItemResponse
+	(*GetAppItemsRequest)(nil),        // 11: apptemplate.v1.GetAppItemsRequest
+	(*GetAppItemsResponse)(nil),       // 12: apptemplate.v1.GetAppItemsResponse
+	(*CreateAppItemRequest)(nil),      // 13: apptemplate.v1.CreateAppItemRequest
+	(*CreateAppItemResponse)(nil),     // 14: apptemplate.v1.CreateAppItemResponse
+	nil,                               // 15: apptemplate.v1.GetAppItemsResponse.AppitemsEntry
+	nil,                               // 16: apptemplate.v1.CreateAppItemResponse.FieldErrorsEntry
+	(*Pagination)(nil),                // 17: apptemplate.v1.Pagination
+	(*AppItem)(nil),                   // 18: apptemplate.v1.AppItem
+	(*PaginationResponse)(nil),        // 19: apptemplate.v1.PaginationResponse
+	(*fieldmaskpb.FieldMask)(nil),     // 20: google.protobuf.FieldMask
 }
 var file_apptemplate_v1_appitems_proto_depIdxs = []int32{
-	17, // 0: apptemplate.v1.AppItemProject.versions:type_name -> apptemplate.v1.AppItemProject.VersionsEntry
-	0,  // 1: apptemplate.v1.ListAppItemsResponse.appitems:type_name -> apptemplate.v1.AppItemInfo
-	1,  // 2: apptemplate.v1.GetAppItemResponse.appitem:type_name -> apptemplate.v1.AppItemProject
-	20, // 3: apptemplate.v1.UpdateAppItemRequest.appitem:type_name -> apptemplate.v1.AppItem
-	21, // 4: apptemplate.v1.UpdateAppItemRequest.update_mask:type_name -> google.protobuf.FieldMask
-	20, // 5: apptemplate.v1.UpdateAppItemResponse.appitem:type_name -> apptemplate.v1.AppItem
-	18, // 6: apptemplate.v1.GetAppItemsResponse.appitems:type_name -> apptemplate.v1.GetAppItemsResponse.AppitemsEntry
-	20, // 7: apptemplate.v1.CreateAppItemRequest.appitem:type_name -> apptemplate.v1.AppItem
-	20, // 8: apptemplate.v1.CreateAppItemResponse.appitem:type_name -> apptemplate.v1.AppItem
-	19, // 9: apptemplate.v1.CreateAppItemResponse.field_errors:type_name -> apptemplate.v1.CreateAppItemResponse.FieldErrorsEntry
-	2,  // 10: apptemplate.v1.AppItemProject.VersionsEntry.value:type_name -> apptemplate.v1.AppItemVersion
-	20, // 11: apptemplate.v1.GetAppItemsResponse.AppitemsEntry.value:type_name -> apptemplate.v1.AppItem
-	15, // 12: apptemplate.v1.AppItemsService.CreateAppItem:input_type -> apptemplate.v1.CreateAppItemRequest
-	13, // 13: apptemplate.v1.AppItemsService.GetAppItems:input_type -> apptemplate.v1.GetAppItemsRequest
-	3,  // 14: apptemplate.v1.AppItemsService.ListAppItems:input_type -> apptemplate.v1.ListAppItemsRequest
-	5,  // 15: apptemplate.v1.AppItemsService.GetAppItem:input_type -> apptemplate.v1.GetAppItemRequest
-	11, // 16: apptemplate.v1.AppItemsService.DeleteAppItem:input_type -> apptemplate.v1.DeleteAppItemRequest
-	9,  // 17: apptemplate.v1.AppItemsService.UpdateAppItem:input_type -> apptemplate.v1.UpdateAppItemRequest
-	16, // 18: apptemplate.v1.AppItemsService.CreateAppItem:output_type -> apptemplate.v1.CreateAppItemResponse
-	14, // 19: apptemplate.v1.AppItemsService.GetAppItems:output_type -> apptemplate.v1.GetAppItemsResponse
-	4,  // 20: apptemplate.v1.AppItemsService.ListAppItems:output_type -> apptemplate.v1.ListAppItemsResponse
-	6,  // 21: apptemplate.v1.AppItemsService.GetAppItem:output_type -> apptemplate.v1.GetAppItemResponse
-	12, // 22: apptemplate.v1.AppItemsService.DeleteAppItem:output_type -> apptemplate.v1.DeleteAppItemResponse
-	10, // 23: apptemplate.v1.AppItemsService.UpdateAppItem:output_type -> apptemplate.v1.UpdateAppItemResponse
+	17, // 0: apptemplate.v1.ListAppItemsRequest.pagination:type_name -> apptemplate.v1.Pagination
+	18, // 1: apptemplate.v1.ListAppItemsResponse.items:type_name -> apptemplate.v1.AppItem
+	19, // 2: apptemplate.v1.ListAppItemsResponse.pagination:type_name -> apptemplate.v1.PaginationResponse
+	18, // 3: apptemplate.v1.GetAppItemResponse.appitem:type_name -> apptemplate.v1.AppItem
+	18, // 4: apptemplate.v1.UpdateAppItemRequest.appitem:type_name -> apptemplate.v1.AppItem
+	20, // 5: apptemplate.v1.UpdateAppItemRequest.update_mask:type_name -> google.protobuf.FieldMask
+	18, // 6: apptemplate.v1.UpdateAppItemResponse.appitem:type_name -> apptemplate.v1.AppItem
+	15, // 7: apptemplate.v1.GetAppItemsResponse.appitems:type_name -> apptemplate.v1.GetAppItemsResponse.AppitemsEntry
+	18, // 8: apptemplate.v1.CreateAppItemRequest.appitem:type_name -> apptemplate.v1.AppItem
+	18, // 9: apptemplate.v1.CreateAppItemResponse.appitem:type_name -> apptemplate.v1.AppItem
+	16, // 10: apptemplate.v1.CreateAppItemResponse.field_errors:type_name -> apptemplate.v1.CreateAppItemResponse.FieldErrorsEntry
+	18, // 11: apptemplate.v1.GetAppItemsResponse.AppitemsEntry.value:type_name -> apptemplate.v1.AppItem
+	13, // 12: apptemplate.v1.AppItemsService.CreateAppItem:input_type -> apptemplate.v1.CreateAppItemRequest
+	11, // 13: apptemplate.v1.AppItemsService.GetAppItems:input_type -> apptemplate.v1.GetAppItemsRequest
+	1,  // 14: apptemplate.v1.AppItemsService.ListAppItems:input_type -> apptemplate.v1.ListAppItemsRequest
+	3,  // 15: apptemplate.v1.AppItemsService.GetAppItem:input_type -> apptemplate.v1.GetAppItemRequest
+	9,  // 16: apptemplate.v1.AppItemsService.DeleteAppItem:input_type -> apptemplate.v1.DeleteAppItemRequest
+	7,  // 17: apptemplate.v1.AppItemsService.UpdateAppItem:input_type -> apptemplate.v1.UpdateAppItemRequest
+	14, // 18: apptemplate.v1.AppItemsService.CreateAppItem:output_type -> apptemplate.v1.CreateAppItemResponse
+	12, // 19: apptemplate.v1.AppItemsService.GetAppItems:output_type -> apptemplate.v1.GetAppItemsResponse
+	2,  // 20: apptemplate.v1.AppItemsService.ListAppItems:output_type -> apptemplate.v1.ListAppItemsResponse
+	4,  // 21: apptemplate.v1.AppItemsService.GetAppItem:output_type -> apptemplate.v1.GetAppItemResponse
+	10, // 22: apptemplate.v1.AppItemsService.DeleteAppItem:output_type -> apptemplate.v1.DeleteAppItemResponse
+	8,  // 23: apptemplate.v1.AppItemsService.UpdateAppItem:output_type -> apptemplate.v1.UpdateAppItemResponse
 	18, // [18:24] is the sub-list for method output_type
 	12, // [12:18] is the sub-list for method input_type
 	12, // [12:12] is the sub-list for extension type_name
@@ -1151,7 +984,7 @@ func file_apptemplate_v1_appitems_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_apptemplate_v1_appitems_proto_rawDesc), len(file_apptemplate_v1_appitems_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   20,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

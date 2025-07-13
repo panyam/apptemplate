@@ -14,7 +14,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file apptemplate/v1/models.proto.
  */
 export const file_apptemplate_v1_models: GenFile = /*@__PURE__*/
-  fileDesc("ChthcHB0ZW1wbGF0ZS92MS9tb2RlbHMucHJvdG8SDmFwcHRlbXBsYXRlLnYxIkYKClBhZ2luYXRpb24SEAoIcGFnZV9rZXkYASABKAkSEwoLcGFnZV9vZmZzZXQYAiABKAUSEQoJcGFnZV9zaXplGAMgASgFIm4KElBhZ2luYXRpb25SZXNwb25zZRIVCg1uZXh0X3BhZ2Vfa2V5GAIgASgJEhgKEG5leHRfcGFnZV9vZmZzZXQYAyABKAUSEAoIaGFzX21vcmUYBCABKAgSFQoNdG90YWxfcmVzdWx0cxgFIAEoBSKYAQoHQXBwSXRlbRIuCgpjcmVhdGVkX2F0GAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIKCgJpZBgDIAEoCRIMCgRuYW1lGAQgASgJEhMKC2Rlc2NyaXB0aW9uGAUgASgJQq8BChJjb20uYXBwdGVtcGxhdGUudjFCC01vZGVsc1Byb3RvUAFaM2dpdGh1Yi5jb20vcGFueWFtL2FwcHRlbXBsYXRlL2dlbi9nby9hcHB0ZW1wbGF0ZS92MaICA0FYWKoCDkFwcHRlbXBsYXRlLlYxygIOQXBwdGVtcGxhdGVcVjHiAhpBcHB0ZW1wbGF0ZVxWMVxHUEJNZXRhZGF0YeoCD0FwcHRlbXBsYXRlOjpWMWIGcHJvdG8z", [file_google_protobuf_timestamp]);
+  fileDesc("ChthcHB0ZW1wbGF0ZS92MS9tb2RlbHMucHJvdG8SDmFwcHRlbXBsYXRlLnYxIkYKClBhZ2luYXRpb24SEAoIcGFnZV9rZXkYASABKAkSEwoLcGFnZV9vZmZzZXQYAiABKAUSEQoJcGFnZV9zaXplGAMgASgFIm4KElBhZ2luYXRpb25SZXNwb25zZRIVCg1uZXh0X3BhZ2Vfa2V5GAIgASgJEhgKEG5leHRfcGFnZV9vZmZzZXQYAyABKAUSEAoIaGFzX21vcmUYBCABKAgSFQoNdG90YWxfcmVzdWx0cxgFIAEoBSLNAQoHQXBwSXRlbRIuCgpjcmVhdGVkX2F0GAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIKCgJpZBgDIAEoCRIMCgRuYW1lGAQgASgJEhMKC2Rlc2NyaXB0aW9uGAUgASgJEgwKBHRhZ3MYBiADKAkSEQoJaW1hZ2VfdXJsGAcgASgJEhIKCmRpZmZpY3VsdHkYCCABKAlCrwEKEmNvbS5hcHB0ZW1wbGF0ZS52MUILTW9kZWxzUHJvdG9QAVozZ2l0aHViLmNvbS9wYW55YW0vYXBwdGVtcGxhdGUvZ2VuL2dvL2FwcHRlbXBsYXRlL3YxogIDQVhYqgIOQXBwdGVtcGxhdGUuVjHKAg5BcHB0ZW1wbGF0ZVxWMeICGkFwcHRlbXBsYXRlXFYxXEdQQk1ldGFkYXRh6gIPQXBwdGVtcGxhdGU6OlYxYgZwcm90bzM", [file_google_protobuf_timestamp]);
 
 /**
  * @generated from message apptemplate.v1.Pagination
@@ -133,6 +133,27 @@ export type AppItem = Message<"apptemplate.v1.AppItem"> & {
    * @generated from field: string description = 5;
    */
   description: string;
+
+  /**
+   * Some tags
+   *
+   * @generated from field: repeated string tags = 6;
+   */
+  tags: string[];
+
+  /**
+   * A possible image url
+   *
+   * @generated from field: string image_url = 7;
+   */
+  imageUrl: string;
+
+  /**
+   * Difficulty - exmaple attribute
+   *
+   * @generated from field: string difficulty = 8;
+   */
+  difficulty: string;
 };
 
 /**

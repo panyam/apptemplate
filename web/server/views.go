@@ -204,6 +204,9 @@ func (n *RootViewsHandler) setupViewsMux() *http.ServeMux {
 func (n *RootViewsHandler) setupAppItemsMux() *http.ServeMux {
 	mux := http.NewServeMux()
 
+	// AppItem detail page
+	mux.HandleFunc("/{appItemId}", n.ViewRenderer(Copier(&AppItemDetailPage{}), ""))
+	
 	// here we ahve specific pages we go to for this resource
 	/*
 		mux.HandleFunc("/new", n.ViewRenderer(Copier(&ComposerPage{}), ""))

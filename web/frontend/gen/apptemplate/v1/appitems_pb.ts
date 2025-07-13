@@ -6,7 +6,7 @@ import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegen
 import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
 import type { FieldMask } from "@bufbuild/protobuf/wkt";
 import { file_google_protobuf_field_mask } from "@bufbuild/protobuf/wkt";
-import type { AppItem } from "./models_pb";
+import type { AppItem, Pagination, PaginationResponse } from "./models_pb";
 import { file_apptemplate_v1_models } from "./models_pb";
 import { file_google_api_annotations } from "../../google/api/annotations_pb";
 import { file_protoc_gen_openapiv2_options_annotations } from "../../protoc-gen-openapiv2/options/annotations_pb";
@@ -16,7 +16,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file apptemplate/v1/appitems.proto.
  */
 export const file_apptemplate_v1_appitems: GenFile = /*@__PURE__*/
-  fileDesc("Ch1hcHB0ZW1wbGF0ZS92MS9hcHBpdGVtcy5wcm90bxIOYXBwdGVtcGxhdGUudjEilAEKC0FwcEl0ZW1JbmZvEgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRpb24YAyABKAkSEAoIY2F0ZWdvcnkYBCABKAkSEgoKZGlmZmljdWx0eRgFIAEoCRIMCgR0YWdzGAYgAygJEgwKBGljb24YByABKAkSFAoMbGFzdF91cGRhdGVkGAggASgJIsECCg5BcHBJdGVtUHJvamVjdBIKCgJpZBgBIAEoCRIMCgRuYW1lGAIgASgJEhMKC2Rlc2NyaXB0aW9uGAMgASgJEhAKCGNhdGVnb3J5GAQgASgJEhIKCmRpZmZpY3VsdHkYBSABKAkSDAoEdGFncxgGIAMoCRIMCgRpY29uGAcgASgJEj4KCHZlcnNpb25zGAggAygLMiwuYXBwdGVtcGxhdGUudjEuQXBwSXRlbVByb2plY3QuVmVyc2lvbnNFbnRyeRIXCg9kZWZhdWx0X3ZlcnNpb24YCSABKAkSFAoMbGFzdF91cGRhdGVkGAogASgJGk8KDVZlcnNpb25zRW50cnkSCwoDa2V5GAEgASgJEi0KBXZhbHVlGAIgASgLMh4uYXBwdGVtcGxhdGUudjEuQXBwSXRlbVZlcnNpb246AjgBIkUKDkFwcEl0ZW1WZXJzaW9uEhMKC2FwcHRlbXBsYXRlGAEgASgJEg4KBnJlY2lwZRgCIAEoCRIOCgZyZWFkbWUYAyABKAkiFQoTTGlzdEFwcEl0ZW1zUmVxdWVzdCJFChRMaXN0QXBwSXRlbXNSZXNwb25zZRItCghhcHBpdGVtcxgBIAMoCzIbLmFwcHRlbXBsYXRlLnYxLkFwcEl0ZW1JbmZvIjAKEUdldEFwcEl0ZW1SZXF1ZXN0EgoKAmlkGAEgASgJEg8KB3ZlcnNpb24YAiABKAkiRQoSR2V0QXBwSXRlbVJlc3BvbnNlEi8KB2FwcGl0ZW0YASABKAsyHi5hcHB0ZW1wbGF0ZS52MS5BcHBJdGVtUHJvamVjdCI3ChhHZXRBcHBJdGVtQ29udGVudFJlcXVlc3QSCgoCaWQYASABKAkSDwoHdmVyc2lvbhgCIAEoCSJoChlHZXRBcHBJdGVtQ29udGVudFJlc3BvbnNlEhsKE2FwcHRlbXBsYXRlX2NvbnRlbnQYASABKAkSFgoOcmVjaXBlX2NvbnRlbnQYAiABKAkSFgoOcmVhZG1lX2NvbnRlbnQYAyABKAkijgEKFFVwZGF0ZUFwcEl0ZW1SZXF1ZXN0EigKB2FwcGl0ZW0YASABKAsyFy5hcHB0ZW1wbGF0ZS52MS5BcHBJdGVtEi8KC3VwZGF0ZV9tYXNrGAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLkZpZWxkTWFzazobkkEYChYqFFVwZGF0ZUFwcEl0ZW1SZXF1ZXN0Il8KFVVwZGF0ZUFwcEl0ZW1SZXNwb25zZRIoCgdhcHBpdGVtGAEgASgLMhcuYXBwdGVtcGxhdGUudjEuQXBwSXRlbTockkEZChcqFVVwZGF0ZUFwcEl0ZW1SZXNwb25zZSIiChREZWxldGVBcHBJdGVtUmVxdWVzdBIKCgJpZBgBIAEoCSIXChVEZWxldGVBcHBJdGVtUmVzcG9uc2UiIQoSR2V0QXBwSXRlbXNSZXF1ZXN0EgsKA2lkcxgBIAMoCSKkAQoTR2V0QXBwSXRlbXNSZXNwb25zZRJDCghhcHBpdGVtcxgBIAMoCzIxLmFwcHRlbXBsYXRlLnYxLkdldEFwcEl0ZW1zUmVzcG9uc2UuQXBwaXRlbXNFbnRyeRpICg1BcHBpdGVtc0VudHJ5EgsKA2tleRgBIAEoCRImCgV2YWx1ZRgCIAEoCzIXLmFwcHRlbXBsYXRlLnYxLkFwcEl0ZW06AjgBIkAKFENyZWF0ZUFwcEl0ZW1SZXF1ZXN0EigKB2FwcGl0ZW0YASABKAsyFy5hcHB0ZW1wbGF0ZS52MS5BcHBJdGVtIsMBChVDcmVhdGVBcHBJdGVtUmVzcG9uc2USKAoHYXBwaXRlbRgBIAEoCzIXLmFwcHRlbXBsYXRlLnYxLkFwcEl0ZW0STAoMZmllbGRfZXJyb3JzGAIgAygLMjYuYXBwdGVtcGxhdGUudjEuQ3JlYXRlQXBwSXRlbVJlc3BvbnNlLkZpZWxkRXJyb3JzRW50cnkaMgoQRmllbGRFcnJvcnNFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBMuIFCg9BcHBJdGVtc1NlcnZpY2USdQoNQ3JlYXRlQXBwSXRlbRIkLmFwcHRlbXBsYXRlLnYxLkNyZWF0ZUFwcEl0ZW1SZXF1ZXN0GiUuYXBwdGVtcGxhdGUudjEuQ3JlYXRlQXBwSXRlbVJlc3BvbnNlIheC0+STAhE6ASoiDC92MS9hcHBpdGVtcxJ1CgtHZXRBcHBJdGVtcxIiLmFwcHRlbXBsYXRlLnYxLkdldEFwcEl0ZW1zUmVxdWVzdBojLmFwcHRlbXBsYXRlLnYxLkdldEFwcEl0ZW1zUmVzcG9uc2UiHYLT5JMCFxIVL3YxL2FwcGl0ZW1zOmJhdGNoR2V0Em8KDExpc3RBcHBJdGVtcxIjLmFwcHRlbXBsYXRlLnYxLkxpc3RBcHBJdGVtc1JlcXVlc3QaJC5hcHB0ZW1wbGF0ZS52MS5MaXN0QXBwSXRlbXNSZXNwb25zZSIUgtPkkwIOEgwvdjEvYXBwaXRlbXMSbgoKR2V0QXBwSXRlbRIhLmFwcHRlbXBsYXRlLnYxLkdldEFwcEl0ZW1SZXF1ZXN0GiIuYXBwdGVtcGxhdGUudjEuR2V0QXBwSXRlbVJlc3BvbnNlIhmC0+STAhMSES92MS9hcHBpdGVtcy97aWR9EnkKDURlbGV0ZUFwcEl0ZW0SJC5hcHB0ZW1wbGF0ZS52MS5EZWxldGVBcHBJdGVtUmVxdWVzdBolLmFwcHRlbXBsYXRlLnYxLkRlbGV0ZUFwcEl0ZW1SZXNwb25zZSIbgtPkkwIVKhMvdjEvYXBwaXRlbXMve2lkPSp9EoQBCg1VcGRhdGVBcHBJdGVtEiQuYXBwdGVtcGxhdGUudjEuVXBkYXRlQXBwSXRlbVJlcXVlc3QaJS5hcHB0ZW1wbGF0ZS52MS5VcGRhdGVBcHBJdGVtUmVzcG9uc2UiJoLT5JMCIDoBKjIbL3YxL2FwcGl0ZW1zL3thcHBpdGVtLmlkPSp9QrEBChJjb20uYXBwdGVtcGxhdGUudjFCDUFwcGl0ZW1zUHJvdG9QAVozZ2l0aHViLmNvbS9wYW55YW0vYXBwdGVtcGxhdGUvZ2VuL2dvL2FwcHRlbXBsYXRlL3YxogIDQVhYqgIOQXBwdGVtcGxhdGUuVjHKAg5BcHB0ZW1wbGF0ZVxWMeICGkFwcHRlbXBsYXRlXFYxXEdQQk1ldGFkYXRh6gIPQXBwdGVtcGxhdGU6OlYxYgZwcm90bzM", [file_google_protobuf_field_mask, file_apptemplate_v1_models, file_google_api_annotations, file_protoc_gen_openapiv2_options_annotations]);
+  fileDesc("Ch1hcHB0ZW1wbGF0ZS92MS9hcHBpdGVtcy5wcm90bxIOYXBwdGVtcGxhdGUudjEilAEKC0FwcEl0ZW1JbmZvEgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRpb24YAyABKAkSEAoIY2F0ZWdvcnkYBCABKAkSEgoKZGlmZmljdWx0eRgFIAEoCRIMCgR0YWdzGAYgAygJEgwKBGljb24YByABKAkSFAoMbGFzdF91cGRhdGVkGAggASgJIlcKE0xpc3RBcHBJdGVtc1JlcXVlc3QSLgoKcGFnaW5hdGlvbhgBIAEoCzIaLmFwcHRlbXBsYXRlLnYxLlBhZ2luYXRpb24SEAoIb3duZXJfaWQYAiABKAkidgoUTGlzdEFwcEl0ZW1zUmVzcG9uc2USJgoFaXRlbXMYASADKAsyFy5hcHB0ZW1wbGF0ZS52MS5BcHBJdGVtEjYKCnBhZ2luYXRpb24YAiABKAsyIi5hcHB0ZW1wbGF0ZS52MS5QYWdpbmF0aW9uUmVzcG9uc2UiMAoRR2V0QXBwSXRlbVJlcXVlc3QSCgoCaWQYASABKAkSDwoHdmVyc2lvbhgCIAEoCSI+ChJHZXRBcHBJdGVtUmVzcG9uc2USKAoHYXBwaXRlbRgBIAEoCzIXLmFwcHRlbXBsYXRlLnYxLkFwcEl0ZW0iNwoYR2V0QXBwSXRlbUNvbnRlbnRSZXF1ZXN0EgoKAmlkGAEgASgJEg8KB3ZlcnNpb24YAiABKAkiaAoZR2V0QXBwSXRlbUNvbnRlbnRSZXNwb25zZRIbChNhcHB0ZW1wbGF0ZV9jb250ZW50GAEgASgJEhYKDnJlY2lwZV9jb250ZW50GAIgASgJEhYKDnJlYWRtZV9jb250ZW50GAMgASgJIo4BChRVcGRhdGVBcHBJdGVtUmVxdWVzdBIoCgdhcHBpdGVtGAEgASgLMhcuYXBwdGVtcGxhdGUudjEuQXBwSXRlbRIvCgt1cGRhdGVfbWFzaxgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5GaWVsZE1hc2s6G5JBGAoWKhRVcGRhdGVBcHBJdGVtUmVxdWVzdCJfChVVcGRhdGVBcHBJdGVtUmVzcG9uc2USKAoHYXBwaXRlbRgBIAEoCzIXLmFwcHRlbXBsYXRlLnYxLkFwcEl0ZW06HJJBGQoXKhVVcGRhdGVBcHBJdGVtUmVzcG9uc2UiIgoURGVsZXRlQXBwSXRlbVJlcXVlc3QSCgoCaWQYASABKAkiFwoVRGVsZXRlQXBwSXRlbVJlc3BvbnNlIiEKEkdldEFwcEl0ZW1zUmVxdWVzdBILCgNpZHMYASADKAkipAEKE0dldEFwcEl0ZW1zUmVzcG9uc2USQwoIYXBwaXRlbXMYASADKAsyMS5hcHB0ZW1wbGF0ZS52MS5HZXRBcHBJdGVtc1Jlc3BvbnNlLkFwcGl0ZW1zRW50cnkaSAoNQXBwaXRlbXNFbnRyeRILCgNrZXkYASABKAkSJgoFdmFsdWUYAiABKAsyFy5hcHB0ZW1wbGF0ZS52MS5BcHBJdGVtOgI4ASJAChRDcmVhdGVBcHBJdGVtUmVxdWVzdBIoCgdhcHBpdGVtGAEgASgLMhcuYXBwdGVtcGxhdGUudjEuQXBwSXRlbSLDAQoVQ3JlYXRlQXBwSXRlbVJlc3BvbnNlEigKB2FwcGl0ZW0YASABKAsyFy5hcHB0ZW1wbGF0ZS52MS5BcHBJdGVtEkwKDGZpZWxkX2Vycm9ycxgCIAMoCzI2LmFwcHRlbXBsYXRlLnYxLkNyZWF0ZUFwcEl0ZW1SZXNwb25zZS5GaWVsZEVycm9yc0VudHJ5GjIKEEZpZWxkRXJyb3JzRW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4ATLiBQoPQXBwSXRlbXNTZXJ2aWNlEnUKDUNyZWF0ZUFwcEl0ZW0SJC5hcHB0ZW1wbGF0ZS52MS5DcmVhdGVBcHBJdGVtUmVxdWVzdBolLmFwcHRlbXBsYXRlLnYxLkNyZWF0ZUFwcEl0ZW1SZXNwb25zZSIXgtPkkwIROgEqIgwvdjEvYXBwaXRlbXMSdQoLR2V0QXBwSXRlbXMSIi5hcHB0ZW1wbGF0ZS52MS5HZXRBcHBJdGVtc1JlcXVlc3QaIy5hcHB0ZW1wbGF0ZS52MS5HZXRBcHBJdGVtc1Jlc3BvbnNlIh2C0+STAhcSFS92MS9hcHBpdGVtczpiYXRjaEdldBJvCgxMaXN0QXBwSXRlbXMSIy5hcHB0ZW1wbGF0ZS52MS5MaXN0QXBwSXRlbXNSZXF1ZXN0GiQuYXBwdGVtcGxhdGUudjEuTGlzdEFwcEl0ZW1zUmVzcG9uc2UiFILT5JMCDhIML3YxL2FwcGl0ZW1zEm4KCkdldEFwcEl0ZW0SIS5hcHB0ZW1wbGF0ZS52MS5HZXRBcHBJdGVtUmVxdWVzdBoiLmFwcHRlbXBsYXRlLnYxLkdldEFwcEl0ZW1SZXNwb25zZSIZgtPkkwITEhEvdjEvYXBwaXRlbXMve2lkfRJ5Cg1EZWxldGVBcHBJdGVtEiQuYXBwdGVtcGxhdGUudjEuRGVsZXRlQXBwSXRlbVJlcXVlc3QaJS5hcHB0ZW1wbGF0ZS52MS5EZWxldGVBcHBJdGVtUmVzcG9uc2UiG4LT5JMCFSoTL3YxL2FwcGl0ZW1zL3tpZD0qfRKEAQoNVXBkYXRlQXBwSXRlbRIkLmFwcHRlbXBsYXRlLnYxLlVwZGF0ZUFwcEl0ZW1SZXF1ZXN0GiUuYXBwdGVtcGxhdGUudjEuVXBkYXRlQXBwSXRlbVJlc3BvbnNlIiaC0+STAiA6ASoyGy92MS9hcHBpdGVtcy97YXBwaXRlbS5pZD0qfUKxAQoSY29tLmFwcHRlbXBsYXRlLnYxQg1BcHBpdGVtc1Byb3RvUAFaM2dpdGh1Yi5jb20vcGFueWFtL2FwcHRlbXBsYXRlL2dlbi9nby9hcHB0ZW1wbGF0ZS92MaICA0FYWKoCDkFwcHRlbXBsYXRlLlYxygIOQXBwdGVtcGxhdGVcVjHiAhpBcHB0ZW1wbGF0ZVxWMVxHUEJNZXRhZGF0YeoCD0FwcHRlbXBsYXRlOjpWMWIGcHJvdG8z", [file_google_protobuf_field_mask, file_apptemplate_v1_models, file_google_api_annotations, file_protoc_gen_openapiv2_options_annotations]);
 
 /**
  * AppItemInfo represents a appitem in the catalog
@@ -73,104 +73,24 @@ export const AppItemInfoSchema: GenMessage<AppItemInfo> = /*@__PURE__*/
   messageDesc(file_apptemplate_v1_appitems, 0);
 
 /**
- * AppItemProject represents a full appitem project
- *
- * @generated from message apptemplate.v1.AppItemProject
- */
-export type AppItemProject = Message<"apptemplate.v1.AppItemProject"> & {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id: string;
-
-  /**
-   * @generated from field: string name = 2;
-   */
-  name: string;
-
-  /**
-   * @generated from field: string description = 3;
-   */
-  description: string;
-
-  /**
-   * @generated from field: string category = 4;
-   */
-  category: string;
-
-  /**
-   * @generated from field: string difficulty = 5;
-   */
-  difficulty: string;
-
-  /**
-   * @generated from field: repeated string tags = 6;
-   */
-  tags: string[];
-
-  /**
-   * @generated from field: string icon = 7;
-   */
-  icon: string;
-
-  /**
-   * @generated from field: map<string, apptemplate.v1.AppItemVersion> versions = 8;
-   */
-  versions: { [key: string]: AppItemVersion };
-
-  /**
-   * @generated from field: string default_version = 9;
-   */
-  defaultVersion: string;
-
-  /**
-   * @generated from field: string last_updated = 10;
-   */
-  lastUpdated: string;
-};
-
-/**
- * Describes the message apptemplate.v1.AppItemProject.
- * Use `create(AppItemProjectSchema)` to create a new message.
- */
-export const AppItemProjectSchema: GenMessage<AppItemProject> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 1);
-
-/**
- * AppItemVersion represents a version of a appitem
- *
- * @generated from message apptemplate.v1.AppItemVersion
- */
-export type AppItemVersion = Message<"apptemplate.v1.AppItemVersion"> & {
-  /**
-   * @generated from field: string apptemplate = 1;
-   */
-  apptemplate: string;
-
-  /**
-   * @generated from field: string recipe = 2;
-   */
-  recipe: string;
-
-  /**
-   * @generated from field: string readme = 3;
-   */
-  readme: string;
-};
-
-/**
- * Describes the message apptemplate.v1.AppItemVersion.
- * Use `create(AppItemVersionSchema)` to create a new message.
- */
-export const AppItemVersionSchema: GenMessage<AppItemVersion> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 2);
-
-/**
  * Request messages
  *
  * @generated from message apptemplate.v1.ListAppItemsRequest
  */
 export type ListAppItemsRequest = Message<"apptemplate.v1.ListAppItemsRequest"> & {
+  /**
+   * Pagination info
+   *
+   * @generated from field: apptemplate.v1.Pagination pagination = 1;
+   */
+  pagination?: Pagination;
+
+  /**
+   * May be filter by owner id
+   *
+   * @generated from field: string owner_id = 2;
+   */
+  ownerId: string;
 };
 
 /**
@@ -178,16 +98,21 @@ export type ListAppItemsRequest = Message<"apptemplate.v1.ListAppItemsRequest"> 
  * Use `create(ListAppItemsRequestSchema)` to create a new message.
  */
 export const ListAppItemsRequestSchema: GenMessage<ListAppItemsRequest> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 3);
+  messageDesc(file_apptemplate_v1_appitems, 1);
 
 /**
  * @generated from message apptemplate.v1.ListAppItemsResponse
  */
 export type ListAppItemsResponse = Message<"apptemplate.v1.ListAppItemsResponse"> & {
   /**
-   * @generated from field: repeated apptemplate.v1.AppItemInfo appitems = 1;
+   * @generated from field: repeated apptemplate.v1.AppItem items = 1;
    */
-  appitems: AppItemInfo[];
+  items: AppItem[];
+
+  /**
+   * @generated from field: apptemplate.v1.PaginationResponse pagination = 2;
+   */
+  pagination?: PaginationResponse;
 };
 
 /**
@@ -195,7 +120,7 @@ export type ListAppItemsResponse = Message<"apptemplate.v1.ListAppItemsResponse"
  * Use `create(ListAppItemsResponseSchema)` to create a new message.
  */
 export const ListAppItemsResponseSchema: GenMessage<ListAppItemsResponse> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 4);
+  messageDesc(file_apptemplate_v1_appitems, 2);
 
 /**
  * @generated from message apptemplate.v1.GetAppItemRequest
@@ -219,16 +144,16 @@ export type GetAppItemRequest = Message<"apptemplate.v1.GetAppItemRequest"> & {
  * Use `create(GetAppItemRequestSchema)` to create a new message.
  */
 export const GetAppItemRequestSchema: GenMessage<GetAppItemRequest> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 5);
+  messageDesc(file_apptemplate_v1_appitems, 3);
 
 /**
  * @generated from message apptemplate.v1.GetAppItemResponse
  */
 export type GetAppItemResponse = Message<"apptemplate.v1.GetAppItemResponse"> & {
   /**
-   * @generated from field: apptemplate.v1.AppItemProject appitem = 1;
+   * @generated from field: apptemplate.v1.AppItem appitem = 1;
    */
-  appitem?: AppItemProject;
+  appitem?: AppItem;
 };
 
 /**
@@ -236,7 +161,7 @@ export type GetAppItemResponse = Message<"apptemplate.v1.GetAppItemResponse"> & 
  * Use `create(GetAppItemResponseSchema)` to create a new message.
  */
 export const GetAppItemResponseSchema: GenMessage<GetAppItemResponse> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 6);
+  messageDesc(file_apptemplate_v1_appitems, 4);
 
 /**
  * @generated from message apptemplate.v1.GetAppItemContentRequest
@@ -260,7 +185,7 @@ export type GetAppItemContentRequest = Message<"apptemplate.v1.GetAppItemContent
  * Use `create(GetAppItemContentRequestSchema)` to create a new message.
  */
 export const GetAppItemContentRequestSchema: GenMessage<GetAppItemContentRequest> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 7);
+  messageDesc(file_apptemplate_v1_appitems, 5);
 
 /**
  * @generated from message apptemplate.v1.GetAppItemContentResponse
@@ -287,7 +212,7 @@ export type GetAppItemContentResponse = Message<"apptemplate.v1.GetAppItemConten
  * Use `create(GetAppItemContentResponseSchema)` to create a new message.
  */
 export const GetAppItemContentResponseSchema: GenMessage<GetAppItemContentResponse> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 8);
+  messageDesc(file_apptemplate_v1_appitems, 6);
 
 /**
  * @generated from message apptemplate.v1.UpdateAppItemRequest
@@ -315,7 +240,7 @@ export type UpdateAppItemRequest = Message<"apptemplate.v1.UpdateAppItemRequest"
  * Use `create(UpdateAppItemRequestSchema)` to create a new message.
  */
 export const UpdateAppItemRequestSchema: GenMessage<UpdateAppItemRequest> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 9);
+  messageDesc(file_apptemplate_v1_appitems, 7);
 
 /**
  * *
@@ -338,7 +263,7 @@ export type UpdateAppItemResponse = Message<"apptemplate.v1.UpdateAppItemRespons
  * Use `create(UpdateAppItemResponseSchema)` to create a new message.
  */
 export const UpdateAppItemResponseSchema: GenMessage<UpdateAppItemResponse> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 10);
+  messageDesc(file_apptemplate_v1_appitems, 8);
 
 /**
  * *
@@ -361,7 +286,7 @@ export type DeleteAppItemRequest = Message<"apptemplate.v1.DeleteAppItemRequest"
  * Use `create(DeleteAppItemRequestSchema)` to create a new message.
  */
 export const DeleteAppItemRequestSchema: GenMessage<DeleteAppItemRequest> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 11);
+  messageDesc(file_apptemplate_v1_appitems, 9);
 
 /**
  * *
@@ -377,7 +302,7 @@ export type DeleteAppItemResponse = Message<"apptemplate.v1.DeleteAppItemRespons
  * Use `create(DeleteAppItemResponseSchema)` to create a new message.
  */
 export const DeleteAppItemResponseSchema: GenMessage<DeleteAppItemResponse> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 12);
+  messageDesc(file_apptemplate_v1_appitems, 10);
 
 /**
  * *
@@ -400,7 +325,7 @@ export type GetAppItemsRequest = Message<"apptemplate.v1.GetAppItemsRequest"> & 
  * Use `create(GetAppItemsRequestSchema)` to create a new message.
  */
 export const GetAppItemsRequestSchema: GenMessage<GetAppItemsRequest> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 13);
+  messageDesc(file_apptemplate_v1_appitems, 11);
 
 /**
  * *
@@ -420,7 +345,7 @@ export type GetAppItemsResponse = Message<"apptemplate.v1.GetAppItemsResponse"> 
  * Use `create(GetAppItemsResponseSchema)` to create a new message.
  */
 export const GetAppItemsResponseSchema: GenMessage<GetAppItemsResponse> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 14);
+  messageDesc(file_apptemplate_v1_appitems, 12);
 
 /**
  * *
@@ -443,7 +368,7 @@ export type CreateAppItemRequest = Message<"apptemplate.v1.CreateAppItemRequest"
  * Use `create(CreateAppItemRequestSchema)` to create a new message.
  */
 export const CreateAppItemRequestSchema: GenMessage<CreateAppItemRequest> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 15);
+  messageDesc(file_apptemplate_v1_appitems, 13);
 
 /**
  * *
@@ -474,7 +399,7 @@ export type CreateAppItemResponse = Message<"apptemplate.v1.CreateAppItemRespons
  * Use `create(CreateAppItemResponseSchema)` to create a new message.
  */
 export const CreateAppItemResponseSchema: GenMessage<CreateAppItemResponse> = /*@__PURE__*/
-  messageDesc(file_apptemplate_v1_appitems, 16);
+  messageDesc(file_apptemplate_v1_appitems, 14);
 
 /**
  * AppItemsService manages the appitem examples catalog
