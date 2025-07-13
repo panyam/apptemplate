@@ -20,7 +20,7 @@
 {{ end }}
 
 {{ define "BodySection" }}
-    <input id="appitemIdInput" value = "{{ .DesignId }}" type="hidden" />
+    <input id="appitemIdInput" value = "{{ .AppItemId }}" type="hidden" />
     <!-- Main content with right padding on desktop to account for sidebar -->
     <main class="flex-1 p-4 md:ml-64 print:ml-4">
         <!-- Document Content -->
@@ -38,11 +38,9 @@
 {{ end }} 
 
 {{ define "PostBodySection" }}
-{{# include "gen/DesignEditorPage.html" #}}
-{{# include "TemplateRegistry.html" #}}
+<!-- Any additional scripts or content for AppItem detail page -->
 {{ end }}
 
-{{/* --- IMPORTANT: Modify the BasePage block in DesignEditorPage template --- */}}
-{{ define "DesignEditorPage" }}
-    {{ template "BasePage" . }}
+{{ define "AppItemDetailPage" }}
+{{ template "BasePage" . }}
 {{ end }}
