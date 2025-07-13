@@ -8,6 +8,7 @@ import (
 
 // AppItemsServiceImpl implements the AppItemsService gRPC interface
 type AppItemsServiceImpl struct {
+	v1.UnimplementedAppItemsServiceServer
 }
 
 // NewAppItemsService creates a new AppItemsService implementation

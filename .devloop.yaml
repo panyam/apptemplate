@@ -20,11 +20,11 @@ rules:
           - "go.mod"
           - "go.sum"
     commands:
-      - "echo '🔧 Building Parser and SDL Binary...'"
+      - "echo '🔧 Building APPTEMPLATE Binary...'"
       - "make binlocal"
       # - "go test -short ./..."
       - "echo '✅ Backend build and tests complete'"
-      - "/tmp/sdl serve"
+      - "/tmp/apptemplate serve"
 
   # Frontend Development & Testing
   - name: "frontend"
@@ -55,22 +55,6 @@ rules:
       - "echo '🧪 Running frontend tests...'"
       # - "npm run test:unit"
       - "echo '✅ Frontend build complete and tests disabled'"
-
-  # WebAssembly Development
-  - name: "wasm"
-    color: "yellow"
-    workdir: "./wasm"
-    watch:
-      - action: "include"
-        patterns:
-          - "wasm/**/*.go"
-          - "wasm/Makefile"
-    commands:
-      - "echo '🕸️ Building WebAssembly...'"
-      - "make"
-      - "echo '🧪 Running WASM tests...'"
-      - "GOOS=js GOARCH=wasm go test -v ./..."
-      - "echo '✅ WASM build and tests complete'"
 
   # Protocol Buffers (affects both Go and Web)
   - name: "protobuf"

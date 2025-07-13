@@ -10,6 +10,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/panyam/apptemplate/services"
 	"github.com/panyam/apptemplate/utils"
+	web "github.com/panyam/apptemplate/web/server"
 )
 
 var (
@@ -79,7 +80,7 @@ func (b *Backend) SetupApp() *utils.App {
 	app := &utils.App{Ctx: context.Background()}
 	log.Println("Grpc, Address: ", grpcAddress)
 	log.Println("gateway, Address: ", gatewayAddress)
-	app.AddServer(&services.GrpcServer{Address: grpcAddress, CanvasService: canvasService})
-	app.AddServer(&server.WebAppServer{GrpcAddress: grpcAddress, Address: gatewayAddress, CanvasService: canvasService})
+	app.AddServer(&services.Server{Address: b.GrpcAddress})
+	app.AddServer(&web.WebAppServer{GrpcAddress: b.GrpcAddress, Address: b.GatewayAddress})
 	return app
 }
