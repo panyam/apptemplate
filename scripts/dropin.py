@@ -18,6 +18,7 @@ import argparse
 import shutil
 import re
 import json
+import yaml
 from pathlib import Path
 from typing import List, Dict, Set, Tuple
 import subprocess
@@ -32,6 +33,9 @@ class AppTemplateDropin:
         self.exclude_appitem = options.get('exclude_appitem', True)
         self.dry_run = options.get('dry_run', False)
         
+        # Load configuration from config file
+        self.config = self.load_config()
+        
         # File patterns that contain entity references
         self.entity_patterns = {
             'AppItem': 'AppItem',
@@ -40,81 +44,6 @@ class AppTemplateDropin:
             'AppItems': 'AppItems',
         }
         
-        # Files to exclude (AppItem specific)
-        self.exclude_files = set([
-            'services/appitems_service.go',
-            'web/server/AppItemDetailPage.go', 
-            'web/server/AppItemListView.go',
-            'web/server/appitems_handler.go',
-            'web/templates/AppItemDetailPage.html',
-            'web/templates/AppItemList.html',
-            'web/frontend/components/AppItemDetailsPage.ts',
-            'protos/apptemplate/v1/appitems.proto',
-        ]) if self.exclude_appitem else set()
-        
-        # Infrastructure files to copy as-is
-        self.infrastructure_files = {
-            'utils/',
-            'services/auth.go',
-            'services/grpcserver.go', 
-            'services/clientmgr.go',
-            'services/models.go',
-            'web/server/webserver.go',
-            'web/server/app.go',
-            'web/server/views.go',
-            'web/server/api.go',
-            'web/server/connect.go',
-            'web/server/connectbridge.go',
-            'web/server/user.go',
-            'web/server/GenericPage.go',
-            'web/server/Header.go',
-            'web/server/HomePage.go',
-            'web/server/LoginPage.go',
-            'web/server/Paginator.go',
-            'web/frontend/css/',
-            'web/static/',
-            'web/package.json',
-            'web/tailwind.config.js',
-            'web/webpack.config.js',
-            'web/tsconfig.json',
-            'web/Makefile',
-            'web/templates/BasePage.html',
-            'web/templates/Header.html',
-            'web/templates/HomePage.html',
-            'web/templates/LoginPage.html',
-            'web/templates/ModalContainer.html',
-            'web/templates/ToastContainer.html',
-            'web/templates/PrivacyPolicy.html',
-            'Makefile',
-            'buf.yaml',
-            'buf.gen.yaml',
-            'go.mod',
-            'go.sum',
-            'main.go',
-            'lib/',
-            'README.md',
-            '.devloop.yaml',
-        }
-        
-        # Directories to exclude when copying
-        self.exclude_patterns = {
-            'gen/',
-            'gen',
-            'web/gen/',
-            'web/gen',
-            'web/frontend/gen/',
-            'web/frontend/gen',
-            'web/static/js/gen/',
-            'web/static/js/gen',
-            'web/templates/gen/',
-            'web/templates/gen',
-            'logs/',
-            'logs',
-            'dist/',
-            'dist',
-            'node_modules/',
-            'node_modules',
-        }
 
     def run(self):
         """Main execution method"""
@@ -140,6 +69,19 @@ class AppTemplateDropin:
         except Exception as e:
             print(f"❌ Error: {e}")
             sys.exit(1)
+
+    def load_config(self):
+        """Load configuration from dropin_config.yaml"""
+        config_path = Path(__file__).parent / 'dropin_config.yaml'
+        if not config_path.exists():
+            # Fallback to minimal config if file doesn't exist
+            return {
+                'exclude_globs': ['gen/', 'gen/**', 'node_modules/', 'node_modules/**', '.git/', '.git/**'],
+                'exclude_appitem_globs': []
+            }
+        
+        with open(config_path, 'r') as f:
+            return yaml.safe_load(f)
 
     def validate_directories(self):
         """Validate source and target directories"""
@@ -168,38 +110,72 @@ class AppTemplateDropin:
             print(f"💾 Created backup at {backup_dir}")
 
     def copy_infrastructure(self):
-        """Copy infrastructure files and transform project references"""
+        """Copy all files except those excluded, using opt-out approach"""
         print("📋 Copying infrastructure files...")
         
-        for file_pattern in self.infrastructure_files:
-            source_path = self.source_dir / file_pattern
-            
-            if not source_path.exists():
-                continue
-                
-            target_path = self.target_dir / file_pattern
-            
-            if self.dry_run:
-                print(f"🧪 Would copy: {file_pattern}")
-                continue
-                
-            if source_path.is_dir():
-                if target_path.exists():
-                    shutil.rmtree(target_path)
-                # Copy directory and then transform files within it
-                shutil.copytree(source_path, target_path, ignore=self.ignore_patterns)
-                self.transform_directory(target_path)
-            else:
-                target_path.parent.mkdir(parents=True, exist_ok=True)
-                # Copy and transform individual file
-                if self.should_transform_file(source_path):
-                    content = source_path.read_text(encoding='utf-8', errors='ignore')
-                    content = self.transform_project_content(content)
-                    target_path.write_text(content, encoding='utf-8')
+        def copy_recursive(src_path: Path, dst_path: Path, rel_path: str = ""):
+            """Recursively copy files, excluding based on config"""
+            if src_path.is_dir():
+                # Check if directory should be excluded
+                if self.should_exclude_path(rel_path):
+                    return
+                    
+                if dst_path.exists():
+                    if dst_path.is_file():
+                        dst_path.unlink()
                 else:
-                    shutil.copy2(source_path, target_path)
+                    dst_path.mkdir(parents=True, exist_ok=True)
                 
-            print(f"📄 Copied: {file_pattern}")
+                for item in src_path.iterdir():
+                    item_rel_path = f"{rel_path}/{item.name}" if rel_path else item.name
+                    copy_recursive(item, dst_path / item.name, item_rel_path)
+            else:
+                # Check if file should be excluded
+                if self.should_exclude_path(rel_path):
+                    return
+                
+                if self.dry_run:
+                    print(f"🧪 Would copy: {rel_path}")
+                    return
+                
+                dst_path.parent.mkdir(parents=True, exist_ok=True)
+                
+                # Copy and transform file
+                if self.should_transform_file(src_path):
+                    content = src_path.read_text(encoding='utf-8', errors='ignore')
+                    content = self.transform_project_content(content)
+                    dst_path.write_text(content, encoding='utf-8')
+                else:
+                    shutil.copy2(src_path, dst_path)
+                print(f"📄 Copied: {rel_path}")
+        
+        # Start recursive copy from source directory
+        copy_recursive(self.source_dir, self.target_dir)
+
+    def should_exclude_path(self, rel_path: str) -> bool:
+        """Check if a path should be excluded based on config"""
+        import fnmatch
+        
+        # Don't exclude the root directory (empty path)
+        if not rel_path:
+            return False
+            
+        # Always exclude hidden files/dirs except .devloop.yaml
+        if rel_path.startswith('.') and rel_path != '.devloop.yaml':
+            return True
+        
+        # Check global exclude patterns
+        for pattern in self.config.get('exclude_globs', []):
+            if fnmatch.fnmatch(rel_path, pattern):
+                return True
+        
+        # Check AppItem-specific exclusions when exclude_appitem is True
+        if self.exclude_appitem:
+            for pattern in self.config.get('exclude_appitem_globs', []):
+                if fnmatch.fnmatch(rel_path, pattern):
+                    return True
+        
+        return False
 
     def transform_directory(self, directory_path: Path):
         """Transform all transformable files in a directory recursively"""
@@ -269,16 +245,6 @@ class AppTemplateDropin:
             
         return content
 
-    def ignore_patterns(self, dir_path, names):
-        """Ignore function for shutil.copytree to exclude gen/ and other patterns"""
-        ignored = []
-        for name in names:
-            # Check if this directory/file should be excluded
-            if name in {'gen', 'logs', 'dist', 'node_modules'}:
-                ignored.append(name)
-            elif name.endswith('.log'):
-                ignored.append(name)
-        return ignored
 
     def generate_entities(self):
         """Generate files for each entity"""

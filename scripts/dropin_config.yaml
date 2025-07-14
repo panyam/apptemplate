@@ -1,0 +1,47 @@
+# Configuration for dropin.py script
+# This file controls which files/directories are excluded during project transformation
+
+# Global exclude patterns (always excluded)
+exclude_globs:
+  # Generated directories
+  - "gen"
+  - "gen/**"
+  - "*/gen"
+  - "*/gen/**"
+  - "node_modules"
+  - "node_modules/**"
+  - "*/node_modules"
+  - "*/node_modules/**"
+  - "dist"
+  - "dist/**"
+  - "*/dist"
+  - "*/dist/**"
+  - "logs"
+  - "logs/**"
+  - "*/logs"
+  - "*/logs/**"
+  
+  # Version control and temp files
+  - ".git/"
+  - ".git/**"
+  - "__pycache__/"
+  - "__pycache__/**"
+  - ".DS_Store"
+  - "*.log"
+  - "*.tmp"
+  - ".env"
+  - "buf.lock"
+  - "*.pyc"
+
+# AppItem-specific files to exclude (only when --exclude-appitem is used)
+exclude_appitem_globs:
+  - "protos/apptemplate/v1/appitems.proto"
+  - "services/appitems_service.go"
+  - "web/server/AppItemDetailPage.go"
+  - "web/server/AppItemListView.go"
+  - "web/server/appitems_handler.go"
+  - "web/templates/AppItemDetailPage.html"
+  - "web/templates/AppItemList.html"
+  - "web/frontend/components/AppItemDetailPage.ts"
+  - "web/frontend/components/AppItemDetailsPage.ts"
+  - "web/frontend/components/AppItemListView.ts"
