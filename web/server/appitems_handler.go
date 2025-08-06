@@ -10,6 +10,8 @@ type AppItemsHandler struct {
 	VC *ViewContext
 }
 
+func (v *View
+
 // NewAppItemsHandler creates a new appitems handler
 func NewAppItemsHandler(vc *ViewContext) *AppItemsHandler {
 	return &AppItemsHandler{VC: vc}
@@ -20,8 +22,10 @@ func (h *AppItemsHandler) Handler() http.Handler {
 	mux := http.NewServeMux()
 
 	// AppItem listing page
-	mux.HandleFunc("/appitems", h.handleAppItemListing)
-	mux.HandleFunc("/appitems/", h.handleAppItemListing)
+	mux.HandleFunc("/", h.handleAppItemListing)
+	mux.HandleFunc("/new", h.handleNewAppItem)
+	mux.HandleFunc("/{mapId}", h.handleAppItemDetails)
+	mux.HandleFunc("/{mapId}/edit", h.handleNewAppItem)
 
 	// AppItem details page
 	mux.HandleFunc("/appitem/", h.handleAppItemDetails)
@@ -120,4 +124,24 @@ func (h *AppItemsHandler) handleAppItemDetails(w http.ResponseWriter, r *http.Re
 func toJSON(v any) string {
 	b, _ := json.Marshal(v)
 	return string(b)
+}
+
+func (r *RootViewsHandler) setupAppItemsMux() *http.ServeMux {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", n.ViewRenderer(Copier(&AppItemListingPage{}), ""))
+	mux.HandleFunc("/new", n.ViewRenderer(Copier(&AppItemCreatorPage{}), ""))
+	mux.HandleFunc("/{appItemId}/view", n.ViewRenderer(Copier(&AppItemDetailsPage{}), ""))
+	mux.HandleFunc("/{appItemId}/edit", n.ViewRenderer(Copier(&AppItemEditorPage{}), ""))
+	mux.HandleFunc("/{appItemId}/copy", func(w http.ResponseWriter, r *http.Request) {
+		notationId := r.PathValue("notationId")
+		http.Redirect(w, r, fmt.Sprintf("/appitems/new?copyFrom=%s", notationId), http.StatusFound)
+	})
+	mux.HandleFunc("/{appItemid}", func(w http.ResponseWriter, r *http.Request) {
+		// Handle Delete here
+		log.Println("=============")
+		log.Println("Catch all - should not be coming here if not a delete call", r.Header)
+		log.Println("=============")
+		http.Redirect(w, r, "/", http.StatusFound)
+	})
+	return mux
 }

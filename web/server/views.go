@@ -47,9 +47,6 @@ type View interface {
 type RootViewsHandler struct {
 	mux     *http.ServeMux
 	Context *ViewContext
-
-	// Add other handlers for other resources
-	AppItemsHandler *AppItemsHandler
 }
 
 func NewRootViewsHandler(middleware *oa.Middleware, clients *svc.ClientMgr) *RootViewsHandler {
@@ -96,8 +93,6 @@ func NewRootViewsHandler(middleware *oa.Middleware, clients *svc.ClientMgr) *Roo
 		ClientMgr:      clients,
 		Templates:      templates,
 	}
-
-	out.AppItemsHandler = NewAppItemsHandler(out.Context)
 
 	// setup routes
 	out.setupRoutes()
@@ -165,7 +160,7 @@ func (n *RootViewsHandler) setupRoutes() {
 	n.mux.Handle("/views/", http.StripPrefix("/views", n.setupViewsMux()))
 
 	// Then seutp your "resource" specific endpoints
-	n.mux.Handle("/appitems/", http.StripPrefix("/appitems", n.AppItemsHandler.Handler()))
+	n.mux.Handle("/appitems/", http.StripPrefix("/appitems", n.setupAppItemsMux()))
 
 	n.mux.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir(STATIC_FOLDER))))
 
